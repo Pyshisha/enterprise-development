@@ -15,7 +15,6 @@ public class ServiceWork
 
     public int ServiceOrderId { get; set; }
     public ServiceOrder ServiceOrder { get; set; } = null!;
-
     public int? MechanicId { get; set; }
-    public Mechanic? Mechanic { get; set; }
+    public Mechanic? Mechanic { get; set; } = null!;
 }
