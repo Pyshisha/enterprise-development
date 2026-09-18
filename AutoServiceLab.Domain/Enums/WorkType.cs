@@ -10,7 +10,6 @@ public enum WorkType
     TransmissionRepair = 5,
     ElectricalRepair = 6,
     BodyRepair = 7,
-    Painting = 8,
-    Wash = 9,
-    Detailing = 10
+    Painting = 8
+ 
 }

@@ -25,9 +25,10 @@ public static class DataSeeder
 
     public static List<Car> GetCars(List<Client> clients)
     {
-        return
-        [
-            new() { Id = 1, LicensePlate = "А001АА163", Brand = CarBrand.Toyota, Model = "Camry", Year = 2020, ClientId = clients[0].Id },
+
+        var cars = new List<Car>
+        {
+            new() { Id = 1, LicensePlate = "А001АА163", Brand = CarBrand.Toyota, Model = "Camry", Year = 2020, ClientId = clients[1].Id },
             new() { Id = 2, LicensePlate = "В002ВВ163", Brand = CarBrand.BMW, Model = "X5", Year = 2022, ClientId = clients[1].Id },
             new() { Id = 3, LicensePlate = "С003СС163", Brand = CarBrand.Mercedes, Model = "E-Class", Year = 2021, ClientId = clients[2].Id },
             new() { Id = 4, LicensePlate = "Е004ЕЕ163", Brand = CarBrand.Audi, Model = "Q7", Year = 2020, ClientId = clients[3].Id },
@@ -37,8 +38,15 @@ public static class DataSeeder
             new() { Id = 8, LicensePlate = "О008ОО163", Brand = CarBrand.Hyundai, Model = "Sonata", Year = 2020, ClientId = clients[7].Id },
             new() { Id = 9, LicensePlate = "Р009РР163", Brand = CarBrand.Nissan, Model = "X-Trail", Year = 2021, ClientId = clients[8].Id },
             new() { Id = 10, LicensePlate = "Т010ТТ163", Brand = CarBrand.BMW, Model = "3 Series", Year = 2020, ClientId = clients[9].Id },
+        };
 
-        ];
+        foreach(var car in cars)
+        {
+            clients.First(c => c.Id == car.ClientId).Cars.Add(car);
+        }
+
+        return cars;
+        
     }
     public static List<Mechanic> GetMechanics()
     {
@@ -120,7 +128,7 @@ public static class DataSeeder
             new() { Id = 6, Quantity = 1, PriceAtTime = 8500, PartId = parts[6].Id, ServiceOrderId = orders[7].Id },
             new() { Id = 7, Quantity = 1, PriceAtTime = 6000, PartId = parts[0].Id, ServiceOrderId = orders[9].Id },
             new() { Id = 8, Quantity = 1, PriceAtTime = 800, PartId = parts[1].Id, ServiceOrderId = orders[9].Id },
-            new() { Id = 9, Quantity = 1, PriceAtTime = 6800, PartId = parts[11].Id, ServiceOrderId = orders[9].Id },
+            new() { Id = 9, Quantity = 1, PriceAtTime = 6800, PartId = parts[9].Id, ServiceOrderId = orders[9].Id },
             new() { Id = 10, Quantity = 1, PriceAtTime = 2200, PartId = parts[7].Id, ServiceOrderId = orders[1].Id },
         ];
     }

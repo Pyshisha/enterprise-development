@@ -1,4 +1,5 @@
-﻿using AutoServiceLab.Domain.Entities;
+﻿using AutoServiceLab.Domain.Data;
+using AutoServiceLab.Domain.Entities;
 
 namespace AutoServiceLab.Tests.Fixtures;
 
@@ -14,6 +15,19 @@ public class AutoServiceFixture
     public readonly List<Invoice> Invoices;
 
 
+    public AutoServiceFixture()
+    {
+        Clients = DataSeeder.GetClients();
+        Cars = DataSeeder.GetCars(Clients);
+        Mechanics = DataSeeder.GetMechanics();
+        Parts = DataSeeder.GetParts();
+        ServiceOrders = DataSeeder.GetOrders(Clients, Cars);
+        PartUsages = DataSeeder.GetPartUsages(ServiceOrders, Parts);
+        ServiceWorks = DataSeeder.GetServiceWorks(ServiceOrders, Mechanics);
+        Invoices = DataSeeder.GetInvoices(ServiceOrders); 
+
+
+    }
 
 
 }
