@@ -3,9 +3,14 @@ using AutoServiceLab.Tests.Fixtures;
 
 namespace AutoServiceLab.Tests;
 
+/// <summary>
+/// Набор тестов для проверки LINQ-запросов автосервиса
+/// </summary>
 public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoServiceFixture>
 {
-
+    /// <summary>
+    /// Тест 1: Получение заказов в работе
+    /// </summary>
     [Fact]
     public void GetOrdersInProgress_ReturnsOnlyInProgress()
     {
@@ -20,17 +25,16 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
 
         Assert.NotEmpty(resultOrders);
         Assert.Equal(expectedOrderIds, resultOrders);
-
     }
 
+    /// <summary>
+    /// Тест 2: Получение топ 3 самых дорогих запчастей
+    /// </summary>
     [Fact]
-
     public void GetTopExpensiveParts_ReturnsTopThree()
     {
-
         const int topCount = 3;
         var expectedPrices = new[] { 19000m, 8500m, 6000m };
-
 
         var resultPrices = fixture.Parts
             .OrderByDescending(p => p.SellingPrice)
@@ -41,8 +45,10 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
         Assert.Equal(expectedPrices, resultPrices);
     }
 
+    /// <summary>
+    /// Тест 3: Получение клиентов с несколькими автомобилями
+    /// </summary>
     [Fact]
-
     public void GetClientsWithMultipleCars_ReturnsOnlyMatching()
     {
         var expectedClientsId = new[] { 2 };
@@ -54,11 +60,12 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
             .ToList();
 
         Assert.Equal(expectedClientsId, resultClientsId);
-
     }
 
+    /// <summary>
+    /// Тест 4: Получение автомобилей марки Toyota
+    /// </summary>
     [Fact]
-
     public void GetCarsByBrand_ReturnsOnlyToyota()
     {
         var targetBrand = CarBrand.Toyota;
@@ -73,9 +80,10 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
         Assert.Equal(expectedCarsId, resultCarsId);
     }
 
-
+    /// <summary>
+    /// Тест 5: Получение самого дорогого механика
+    /// </summary>
     [Fact]
-
     public void GetMostExpensiveMechanic_ReturnsHighestRate()
     {
         var expectedName = "Егоров Михаил Валерьевич";
@@ -87,11 +95,12 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
 
         Assert.Equal(expectedName, result.FullName);
         Assert.Equal(expectedHourlyRate, result.HourlyRate);
-
     }
 
+    /// <summary>
+    /// Тест 6: Получение оплаченных счетов
+    /// </summary>
     [Fact]
-
     public void GetPaidInvoices_ReturnsOnlyPaid()
     {
         var expectedInvoicesId = new[] { 1, 3, 5, 6 };
@@ -103,9 +112,11 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
             .ToList();
 
         Assert.Equal(expectedInvoicesId, resultInvoicesId);
-
     }
 
+    /// <summary>
+    /// Тест 7: Получение работ типа «Замена масла»
+    /// </summary>
     [Fact]
     public void GetWorksByType_ReturnsOnlyOilChange()
     {
@@ -121,6 +132,9 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
         Assert.Equal(expectedWorkIds, resultWorkIds);
     }
 
+    /// <summary>
+    /// Тест 8: Получение использований конкретной запчасти
+    /// </summary>
     [Fact]
     public void GetPartUsagesByPart_ReturnsOnlyForSpecificPart()
     {
@@ -135,11 +149,4 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
 
         Assert.Equal(expectedUsageIds, resultUsageIds);
     }
-
-
-
-
-
-
-
 }

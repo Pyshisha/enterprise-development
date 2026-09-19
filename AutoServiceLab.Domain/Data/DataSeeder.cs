@@ -3,8 +3,15 @@ using AutoServiceLab.Domain.Enums;
 
 namespace AutoServiceLab.Domain.Data;
 
+/// <summary>
+/// Создаёт тестовые данные автосервиса
+/// </summary>
 public static class DataSeeder
 {
+    /// <summary>
+    /// Возвращает список клиентов автосервиса
+    /// </summary>
+    /// <returns>Список клиентов</returns>
     public static List<Client> GetClients()
     {
         return
@@ -20,12 +27,15 @@ public static class DataSeeder
             new() { Id = 9, FullName = "Кузнецов Максим Романович", Phone = "+7-927-999-99-99" },
             new() { Id = 10, FullName = "Смирнова Ольга Павловна", Phone = "+7-927-000-00-00" },
         ];
-
     }
 
+    /// <summary>
+    /// Возвращает список автомобилей клиентов
+    /// </summary>
+    /// <param name="clients">Список клиентов</param>
+    /// <returns>Список автомобилей</returns>
     public static List<Car> GetCars(List<Client> clients)
     {
-
         var cars = new List<Car>
         {
             new() { Id = 1, LicensePlate = "А001АА163", Brand = CarBrand.Toyota, Model = "Camry", Year = 2020, ClientId = clients[1].Id },
@@ -46,8 +56,12 @@ public static class DataSeeder
         }
 
         return cars;
-
     }
+
+    /// <summary>
+    /// Возвращает список механиков автосервиса
+    /// </summary>
+    /// <returns>Список механиков</returns>
     public static List<Mechanic> GetMechanics()
     {
         return
@@ -65,23 +79,33 @@ public static class DataSeeder
         ];
     }
 
+    /// <summary>
+    /// Возвращает список запчастей на складе
+    /// </summary>
+    /// <returns>Список запчастей</returns>
     public static List<Part> GetParts()
     {
         return
         [
-            new() { Id = 1, Name = "Масло моторное 5W-30", PartNumber = "OIL-001", Category = PartCategory.Oils, PurchasePrice = 4500, SellingPrice = 6000, QuantityInStock = 25, MinStockQuantity = 5 },
-            new() { Id = 2, Name = "Фильтр масляный", PartNumber = "FIL-001", Category = PartCategory.Filters, PurchasePrice = 500, SellingPrice = 800, QuantityInStock = 40, MinStockQuantity = 10 },
-            new() { Id = 3, Name = "Фильтр воздушный", PartNumber = "FIL-002", Category = PartCategory.Filters, PurchasePrice = 700, SellingPrice = 1100, QuantityInStock = 35, MinStockQuantity = 8 },
-            new() { Id = 4, Name = "Колодки передние", PartNumber = "BRK-001", Category = PartCategory.BrakeSystem, PurchasePrice = 2500, SellingPrice = 3800, QuantityInStock = 15, MinStockQuantity = 5 },
-            new() { Id = 5, Name = "Колодки задние", PartNumber = "BRK-002", Category = PartCategory.BrakeSystem, PurchasePrice = 2200, SellingPrice = 3500, QuantityInStock = 12, MinStockQuantity = 5 },
-            new() { Id = 6, Name = "Свечи зажигания", PartNumber = "IGN-001", Category = PartCategory.Ignition, PurchasePrice = 800, SellingPrice = 1400, QuantityInStock = 30, MinStockQuantity = 10 },
-            new() { Id = 7, Name = "Аккумулятор 60Ач", PartNumber = "BAT-001", Category = PartCategory.Batteries, PurchasePrice = 6000, SellingPrice = 8500, QuantityInStock = 8, MinStockQuantity = 3 },
-            new() { Id = 8, Name = "Ремень ГРМ", PartNumber = "BEL-001", Category = PartCategory.Belts, PurchasePrice = 1500, SellingPrice = 2200, QuantityInStock = 10, MinStockQuantity = 3 },
-            new() { Id = 9, Name = "Тормозная жидкость DOT-4", PartNumber = "FLU-001", Category = PartCategory.Oils, PurchasePrice = 600, SellingPrice = 1000, QuantityInStock = 20, MinStockQuantity = 5 },
-            new() { Id = 10, Name = "Шина летняя 225/45 R17", PartNumber = "TIR-001", Category = PartCategory.Tires, PurchasePrice = 15000, SellingPrice = 19000, QuantityInStock = 4, MinStockQuantity = 2 },
+            new() { Id = 1, Name = "Масло моторное 5W-30", PartNumber = "OIL-001", Category = PartCategory.Oils, PurchasePrice = 4500, SellingPrice = 6000, QuantityInStock = 25 },
+            new() { Id = 2, Name = "Фильтр масляный", PartNumber = "FIL-001", Category = PartCategory.Filters, PurchasePrice = 500, SellingPrice = 800, QuantityInStock = 40 },
+            new() { Id = 3, Name = "Фильтр воздушный", PartNumber = "FIL-002", Category = PartCategory.Filters, PurchasePrice = 700, SellingPrice = 1100, QuantityInStock = 35 },
+            new() { Id = 4, Name = "Колодки передние", PartNumber = "BRK-001", Category = PartCategory.BrakeSystem, PurchasePrice = 2500, SellingPrice = 3800, QuantityInStock = 15 },
+            new() { Id = 5, Name = "Колодки задние", PartNumber = "BRK-002", Category = PartCategory.BrakeSystem, PurchasePrice = 2200, SellingPrice = 3500, QuantityInStock = 12 },
+            new() { Id = 6, Name = "Свечи зажигания", PartNumber = "IGN-001", Category = PartCategory.Ignition, PurchasePrice = 800, SellingPrice = 1400, QuantityInStock = 30 },
+            new() { Id = 7, Name = "Аккумулятор 60Ач", PartNumber = "BAT-001", Category = PartCategory.Batteries, PurchasePrice = 6000, SellingPrice = 8500, QuantityInStock = 8 },
+            new() { Id = 8, Name = "Ремень ГРМ", PartNumber = "BEL-001", Category = PartCategory.Belts, PurchasePrice = 1500, SellingPrice = 2200, QuantityInStock = 10 },
+            new() { Id = 9, Name = "Тормозная жидкость DOT-4", PartNumber = "FLU-001", Category = PartCategory.Oils, PurchasePrice = 600, SellingPrice = 1000, QuantityInStock = 20 },
+            new() { Id = 10, Name = "Шина летняя 225/45 R17", PartNumber = "TIR-001", Category = PartCategory.Tires, PurchasePrice = 15000, SellingPrice = 19000, QuantityInStock = 4 },
         ];
     }
 
+    /// <summary>
+    /// Возвращает список заказов на обслуживание
+    /// </summary>
+    /// <param name="clients">Список клиентов</param>
+    /// <param name="cars">Список автомобилей</param>
+    /// <returns>Список заказов</returns>
     public static List<ServiceOrder> GetOrders(List<Client> clients, List<Car> cars)
     {
         return
@@ -99,6 +123,12 @@ public static class DataSeeder
         ];
     }
 
+    /// <summary>
+    /// Возвращает список выполненных работ
+    /// </summary>
+    /// <param name="orders">Список заказов</param>
+    /// <param name="mechanics">Список механиков</param>
+    /// <returns>Список работ</returns>
     public static List<ServiceWork> GetServiceWorks(List<ServiceOrder> orders, List<Mechanic> mechanics)
     {
         return
@@ -116,6 +146,12 @@ public static class DataSeeder
         ];
     }
 
+    /// <summary>
+    /// Возвращает список использований запчастей
+    /// </summary>
+    /// <param name="orders">Список заказов</param>
+    /// <param name="parts">Список запчастей</param>
+    /// <returns>Список использований запчастей</returns>
     public static List<PartUsage> GetPartUsages(List<ServiceOrder> orders, List<Part> parts)
     {
         return
@@ -133,21 +169,25 @@ public static class DataSeeder
         ];
     }
 
+    /// <summary>
+    /// Возвращает список счетов на оплату
+    /// </summary>
+    /// <param name="orders">Список заказов</param>
+    /// <returns>Список счетов</returns>
     public static List<Invoice> GetInvoices(List<ServiceOrder> orders)
     {
         return
         [
             new() { Id = 1, InvoiceNumber = "INV-2026-000001", InvoiceDate = new DateTime(2026, 1, 7), DueDate = new DateTime(2026, 1, 21), Amount = 7050, PaidAmount = 7050, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[0].Id },
-        new() { Id = 2, InvoiceNumber = "INV-2026-000002", InvoiceDate = new DateTime(2026, 1, 12), DueDate = new DateTime(2026, 1, 26), Amount = 20000, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[1].Id },
-        new() { Id = 3, InvoiceNumber = "INV-2026-000003", InvoiceDate = new DateTime(2026, 1, 27), DueDate = new DateTime(2026, 2, 10), Amount = 76000, PaidAmount = 76000, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Cash, ServiceOrderId = orders[4].Id },
-        new() { Id = 4, InvoiceNumber = "INV-2026-000004", InvoiceDate = new DateTime(2026, 2, 8), DueDate = new DateTime(2026, 2, 22), Amount = 9100, PaidAmount = 4500, PaymentStatus = PaymentStatus.PartiallyPaid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[6].Id },
-        new() { Id = 5, InvoiceNumber = "INV-2026-000005", InvoiceDate = new DateTime(2026, 2, 13), DueDate = new DateTime(2026, 2, 27), Amount = 11000, PaidAmount = 11000, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[7].Id },
-        new() { Id = 6, InvoiceNumber = "INV-2026-000006", InvoiceDate = new DateTime(2026, 2, 28), DueDate = new DateTime(2026, 3, 14), Amount = 9700, PaidAmount = 9700, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[9].Id },
-        new() { Id = 7, InvoiceNumber = "INV-2026-000007", InvoiceDate = new DateTime(2026, 3, 5), DueDate = new DateTime(2026, 3, 19), Amount = 12500, PaidAmount = 6000, PaymentStatus = PaymentStatus.PartiallyPaid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[9].Id },
-        new() { Id = 8, InvoiceNumber = "INV-2026-000008", InvoiceDate = new DateTime(2026, 2, 25), DueDate = new DateTime(2026, 3, 11), Amount = 30800, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[9].Id },
-        new() { Id = 9, InvoiceNumber = "INV-2026-000009", InvoiceDate = new DateTime(2026, 1, 22), DueDate = new DateTime(2026, 2, 5), Amount = 13100, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[3].Id },
-        new() { Id = 10, InvoiceNumber = "INV-2026-000010", InvoiceDate = new DateTime(2026, 2, 1), DueDate = new DateTime(2026, 2, 15), Amount = 0, PaidAmount = 0, PaymentStatus = PaymentStatus.Refunded, ServiceOrderId = orders[5].Id },
-    ];
+            new() { Id = 2, InvoiceNumber = "INV-2026-000002", InvoiceDate = new DateTime(2026, 1, 12), DueDate = new DateTime(2026, 1, 26), Amount = 20000, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[1].Id },
+            new() { Id = 3, InvoiceNumber = "INV-2026-000003", InvoiceDate = new DateTime(2026, 1, 27), DueDate = new DateTime(2026, 2, 10), Amount = 76000, PaidAmount = 76000, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Cash, ServiceOrderId = orders[4].Id },
+            new() { Id = 4, InvoiceNumber = "INV-2026-000004", InvoiceDate = new DateTime(2026, 2, 8), DueDate = new DateTime(2026, 2, 22), Amount = 9100, PaidAmount = 4500, PaymentStatus = PaymentStatus.PartiallyPaid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[6].Id },
+            new() { Id = 5, InvoiceNumber = "INV-2026-000005", InvoiceDate = new DateTime(2026, 2, 13), DueDate = new DateTime(2026, 2, 27), Amount = 11000, PaidAmount = 11000, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[7].Id },
+            new() { Id = 6, InvoiceNumber = "INV-2026-000006", InvoiceDate = new DateTime(2026, 2, 28), DueDate = new DateTime(2026, 3, 14), Amount = 9700, PaidAmount = 9700, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[9].Id },
+            new() { Id = 7, InvoiceNumber = "INV-2026-000007", InvoiceDate = new DateTime(2026, 3, 5), DueDate = new DateTime(2026, 3, 19), Amount = 12500, PaidAmount = 6000, PaymentStatus = PaymentStatus.PartiallyPaid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[9].Id },
+            new() { Id = 8, InvoiceNumber = "INV-2026-000008", InvoiceDate = new DateTime(2026, 2, 25), DueDate = new DateTime(2026, 3, 11), Amount = 30800, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[9].Id },
+            new() { Id = 9, InvoiceNumber = "INV-2026-000009", InvoiceDate = new DateTime(2026, 1, 22), DueDate = new DateTime(2026, 2, 5), Amount = 13100, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[3].Id },
+            new() { Id = 10, InvoiceNumber = "INV-2026-000010", InvoiceDate = new DateTime(2026, 2, 1), DueDate = new DateTime(2026, 2, 15), Amount = 0, PaidAmount = 0, PaymentStatus = PaymentStatus.Refunded, ServiceOrderId = orders[5].Id },
+        ];
     }
 }
-
