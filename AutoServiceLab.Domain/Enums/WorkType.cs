@@ -11,5 +11,5 @@ public enum WorkType
     ElectricalRepair = 6,
     BodyRepair = 7,
     Painting = 8
- 
+
 }

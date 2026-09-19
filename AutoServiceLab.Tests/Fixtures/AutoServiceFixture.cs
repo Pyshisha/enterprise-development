@@ -24,7 +24,7 @@ public class AutoServiceFixture
         ServiceOrders = DataSeeder.GetOrders(Clients, Cars);
         PartUsages = DataSeeder.GetPartUsages(ServiceOrders, Parts);
         ServiceWorks = DataSeeder.GetServiceWorks(ServiceOrders, Mechanics);
-        Invoices = DataSeeder.GetInvoices(ServiceOrders); 
+        Invoices = DataSeeder.GetInvoices(ServiceOrders);
 
 
     }

@@ -53,7 +53,7 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
             .OrderBy(id => id)
             .ToList();
 
-        Assert.Equal (expectedClientsId, resultClientsId);
+        Assert.Equal(expectedClientsId, resultClientsId);
 
     }
 
@@ -87,7 +87,7 @@ public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoService
 
         Assert.Equal(expectedName, result.FullName);
         Assert.Equal(expectedHourlyRate, result.HourlyRate);
-          
+
     }
 
     [Fact]

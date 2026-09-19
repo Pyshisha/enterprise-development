@@ -40,13 +40,13 @@ public static class DataSeeder
             new() { Id = 10, LicensePlate = "Т010ТТ163", Brand = CarBrand.BMW, Model = "3 Series", Year = 2020, ClientId = clients[9].Id },
         };
 
-        foreach(var car in cars)
+        foreach (var car in cars)
         {
             clients.First(c => c.Id == car.ClientId).Cars.Add(car);
         }
 
         return cars;
-        
+
     }
     public static List<Mechanic> GetMechanics()
     {
