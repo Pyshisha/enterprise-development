@@ -46,11 +46,6 @@ public class Mechanic
     public DateTime HireDate { get; set; } = DateTime.Now;
 
     /// <summary>
-    /// Заказы механика
-    /// </summary>
-    public List<ServiceOrder> Orders { get; set; } = [];
-
-    /// <summary>
     /// Работы механика
     /// </summary>
     public List<ServiceWork> Works { get; set; } = [];
