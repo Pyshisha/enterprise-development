@@ -20,7 +20,7 @@ public class Car
     /// <summary>
     /// Марка автомобиля
     /// </summary>
-    public required CarBrand Brand { get; set; }
+    public required string Brand { get; set; }
 
     /// <summary>
     /// Модель автомобиля
@@ -43,11 +43,6 @@ public class Car
     public string? Color { get; set; }
 
     /// <summary>
-    /// Пробег автомобиля
-    /// </summary>
-    public int? Mileage { get; set; }
-
-    /// <summary>
     /// Тип автомобиля
     /// </summary>
     public CarType? Type { get; set; }
@@ -58,11 +53,6 @@ public class Car
     public EngineType? EngineType { get; set; }
 
     /// <summary>
-    /// Объем двигателя автомобиля
-    /// </summary>
-    public int? EngineVolume { get; set; }
-
-    /// <summary>
     /// Идентификатор клиента автосервиса
     /// </summary>
     public int ClientId { get; set; }
@@ -70,7 +60,7 @@ public class Car
     /// <summary>
     /// Клиент автосервиса
     /// </summary>
-    public Client Client { get; set; } = null!;
+    public required Client Client { get; set; }
 
     /// <summary>
     /// Заказы на работы с автомобилем

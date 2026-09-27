@@ -5,7 +5,7 @@ namespace AutoServiceLab.Domain.Entities;
 /// <summary>
 /// Заказ на обслуживание автомобиля
 /// </summary>
-public class ServiceOrder
+public class OrderServive
 {
     /// <summary>
     /// Идентификатор заказа
@@ -16,11 +16,6 @@ public class ServiceOrder
     /// Дата создания заказа
     /// </summary>
     public DateTime CreatedDate { get; set; } = DateTime.Now;
-
-    /// <summary>
-    /// Запланированная дата выполнения
-    /// </summary>
-    public DateTime? ScheduledDate { get; set; }
 
     /// <summary>
     /// Дата завершения заказа
@@ -38,24 +33,9 @@ public class ServiceOrder
     public required string Description { get; set; }
 
     /// <summary>
-    /// Стоимость работ
+    /// Стоимость
     /// </summary>
     public decimal LaborCost => ServiceWorks.Sum(w => w.LaborCost);
-
-    /// <summary>
-    /// Стоимость запчастей
-    /// </summary>
-    public decimal PartsCost => PartsUsed.Sum(p => p.PriceAtTime * p.Quantity);
-
-    /// <summary>
-    /// Общая стоимость заказа
-    /// </summary>
-    public decimal TotalCost => LaborCost + PartsCost;
-
-    /// <summary>
-    /// Счёт на оплату заказа
-    /// </summary>
-    public Invoice? Invoice { get; set; }
 
     /// <summary>
     /// Примечания к заказу
@@ -83,17 +63,12 @@ public class ServiceOrder
     public Car Car { get; set; } = null!;
 
     /// <summary>
-    /// Список работ
+    /// Список работ заказа
     /// </summary>
-    public List<ServiceWork> ServiceWorks { get; set; } = [];
-
-    /// <summary>
-    /// Список использованных запчастей
-    /// </summary>
-    public List<PartUsage> PartsUsed { get; set; } = [];
+    public List<OrderWork> OrderWorks { get; set; } = [];
 
     /// <summary>
     /// Возвращает строковое представление заказа
     /// </summary>
-    public override string ToString() => $"Заказ #{Id}: {TotalCost:C}";
+    public override string ToString() => $"Заказ #{Id}";
 }

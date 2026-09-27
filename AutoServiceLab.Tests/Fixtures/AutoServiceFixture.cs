@@ -41,7 +41,7 @@ public class AutoServiceFixture
     /// <summary>
     /// Список работ
     /// </summary>
-    public readonly List<ServiceWork> ServiceWorks;
+    public readonly List<WorkType> ServiceWorks;
 
     /// <summary>
     /// Список счетов

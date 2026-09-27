@@ -129,7 +129,7 @@ public static class DataSeeder
     /// <param name="orders">Список заказов</param>
     /// <param name="mechanics">Список механиков</param>
     /// <returns>Список работ</returns>
-    public static List<ServiceWork> GetServiceWorks(List<ServiceOrder> orders, List<Mechanic> mechanics)
+    public static List<WorkType> GetServiceWorks(List<ServiceOrder> orders, List<Mechanic> mechanics)
     {
         return
         [

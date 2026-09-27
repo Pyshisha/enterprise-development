@@ -1,4 +1,6 @@
-﻿namespace AutoServiceLab.Domain.Entities;
+﻿using AutoServiceLab.Domain.Enums;
+
+namespace AutoServiceLab.Domain.Entities;
 
 /// <summary>
 /// Механик автосервиса
@@ -16,24 +18,24 @@ public class Mechanic
     public required string FullName { get; set; }
 
     /// <summary>
+    /// Специализация механика
+    /// </summary>
+    public required MechanicSpecialization Specialization { get; set; }
+
+    /// <summary>
+    /// Номер паспорта механика
+    /// </summary>
+    public required string PassportNumber { get; set; }
+
+    /// <summary>
     /// Номер телефона механика
     /// </summary>
     public required string Phone { get; set; }
 
     /// <summary>
-    /// Специализация механика
-    /// </summary>
-    public required string Specialization { get; set; }
-
-    /// <summary>
     /// Опыт работы в годах
     /// </summary>
     public int ExperienceYears { get; set; }
-
-    /// <summary>
-    /// Почасовая ставка
-    /// </summary>
-    public decimal HourlyRate { get; set; }
 
     /// <summary>
     /// Доступность механика
@@ -48,7 +50,7 @@ public class Mechanic
     /// <summary>
     /// Работы механика
     /// </summary>
-    public List<ServiceWork> Works { get; set; } = [];
+    public List<WorkType> Works { get; set; } = [];
 
     /// <summary>
     /// Возвращает строковое представление механика
