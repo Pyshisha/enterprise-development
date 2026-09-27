@@ -1,11 +1,9 @@
-﻿using AutoServiceLab.Domain.Enums;
-
-namespace AutoServiceLab.Domain.Entities;
+﻿namespace AutoServiceLab.Domain.Entities;
 
 /// <summary>
 /// Заказ на обслуживание автомобиля
 /// </summary>
-public class OrderServive
+public class ServiceOrder
 {
     /// <summary>
     /// Идентификатор заказа
@@ -13,34 +11,19 @@ public class OrderServive
     public int Id { get; set; }
 
     /// <summary>
-    /// Дата создания заказа
+    /// Дата приема автомобиля
     /// </summary>
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public DateTime ReceptionDate { get; set; } = DateTime.Now;
 
     /// <summary>
-    /// Дата завершения заказа
+    /// Дата выдачи автомобиля
     /// </summary>
-    public DateTime? CompletedDate { get; set; }
-
-    /// <summary>
-    /// Статус заказа
-    /// </summary>
-    public OrderStatus Status { get; set; } = OrderStatus.Created;
-
-    /// <summary>
-    /// Описание заказа
-    /// </summary>
-    public required string Description { get; set; }
+    public DateTime? IssueDate { get; set; }
 
     /// <summary>
     /// Стоимость
     /// </summary>
-    public decimal LaborCost => ServiceWorks.Sum(w => w.LaborCost);
-
-    /// <summary>
-    /// Примечания к заказу
-    /// </summary>
-    public string? Notes { get; set; }
+    public decimal LaborCost => OrderWorks.Sum(ow => ow.WorkType.LaborCost);
 
     /// <summary>
     /// Идентификатор клиента
@@ -50,7 +33,7 @@ public class OrderServive
     /// <summary>
     /// Клиент
     /// </summary>
-    public Client Client { get; set; } = null!;
+    public required Client Client { get; set; }
 
     /// <summary>
     /// Идентификатор автомобиля
@@ -60,12 +43,17 @@ public class OrderServive
     /// <summary>
     /// Автомобиль
     /// </summary>
-    public Car Car { get; set; } = null!;
+    public required Car Car { get; set; }
 
     /// <summary>
     /// Список работ заказа
     /// </summary>
     public List<OrderWork> OrderWorks { get; set; } = [];
+
+    /// <summary>
+    /// Список механиков заказа
+    /// </summary>
+    public List<OrderMechanic> OrderMechanics { get; set; } = [];
 
     /// <summary>
     /// Возвращает строковое представление заказа

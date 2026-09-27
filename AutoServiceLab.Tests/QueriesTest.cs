@@ -9,144 +9,103 @@ namespace AutoServiceLab.Tests;
 public class QueriesTest(AutoServiceFixture fixture) : IClassFixture<AutoServiceFixture>
 {
     /// <summary>
-    /// Тест 1: Получение заказов в работе
+    /// Тест 1: Вывести информацию о всех механиках, специализирующихся на выбранном виде работ
     /// </summary>
     [Fact]
-    public void GetOrdersInProgress_ReturnsOnlyInProgress()
+    public void GetMechanicsByWorkType_ReturnsOnlyMatching()
     {
-        var targetStatusId = OrderStatus.InProgress;
-        var expectedOrderIds = new[] { 2, 7 };
-
-        var resultOrders = fixture.ServiceOrders
-            .Where(o => o.Status == targetStatusId)
-            .Select(o => o.Id)
-            .OrderBy(o => o)
-            .ToList();
-
-        Assert.NotEmpty(resultOrders);
-        Assert.Equal(expectedOrderIds, resultOrders);
-    }
-
-    /// <summary>
-    /// Тест 2: Получение топ 3 самых дорогих запчастей
-    /// </summary>
-    [Fact]
-    public void GetTopExpensiveParts_ReturnsTopThree()
-    {
-        const int topCount = 3;
-        var expectedPrices = new[] { 19000m, 8500m, 6000m };
-
-        var resultPrices = fixture.Parts
-            .OrderByDescending(p => p.SellingPrice)
-            .Take(topCount)
-            .Select(p => p.SellingPrice)
-            .ToList();
-
-        Assert.Equal(expectedPrices, resultPrices);
-    }
-
-    /// <summary>
-    /// Тест 3: Получение клиентов с несколькими автомобилями
-    /// </summary>
-    [Fact]
-    public void GetClientsWithMultipleCars_ReturnsOnlyMatching()
-    {
-        var expectedClientsId = new[] { 2 };
-
-        var resultClientsId = fixture.Clients
-            .Where(c => c.Cars.Count >= 2)
-            .Select(c => c.Id)
-            .OrderBy(id => id)
-            .ToList();
-
-        Assert.Equal(expectedClientsId, resultClientsId);
-    }
-
-    /// <summary>
-    /// Тест 4: Получение автомобилей марки Toyota
-    /// </summary>
-    [Fact]
-    public void GetCarsByBrand_ReturnsOnlyToyota()
-    {
-        var targetBrand = CarBrand.Toyota;
-        var expectedCarsId = new[] { 1, 7 };
-
-        var resultCarsId = fixture.Cars
-            .Where(c => c.Brand == targetBrand)
-            .Select(c => c.Id)
-            .OrderBy(id => id)
-            .ToList();
-
-        Assert.Equal(expectedCarsId, resultCarsId);
-    }
-
-    /// <summary>
-    /// Тест 5: Получение самого дорогого механика
-    /// </summary>
-    [Fact]
-    public void GetMostExpensiveMechanic_ReturnsHighestRate()
-    {
-        var expectedName = "Егоров Михаил Валерьевич";
-        var expectedHourlyRate = 3000m;
+        var expectedMechanicIds = new[] { 1, 5 };
 
         var result = fixture.Mechanics
-            .OrderByDescending(m => m.HourlyRate)
-            .First();
-
-        Assert.Equal(expectedName, result.FullName);
-        Assert.Equal(expectedHourlyRate, result.HourlyRate);
-    }
-
-    /// <summary>
-    /// Тест 6: Получение оплаченных счетов
-    /// </summary>
-    [Fact]
-    public void GetPaidInvoices_ReturnsOnlyPaid()
-    {
-        var expectedInvoicesId = new[] { 1, 3, 5, 6 };
-
-        var resultInvoicesId = fixture.Invoices
-            .Where(i => i.PaymentStatus == PaymentStatus.Paid)
-            .Select(i => i.Id)
+            .Where(m => m.Specialization == MechanicSpecialization.Engine)
+            .Select(m => m.Id)
             .OrderBy(id => id)
             .ToList();
 
-        Assert.Equal(expectedInvoicesId, resultInvoicesId);
+        Assert.Equal(expectedMechanicIds, result);
     }
 
     /// <summary>
-    /// Тест 7: Получение работ типа «Замена масла»
+    /// Тест 2: Вывести информацию обо всех клиентах, чьи автомобили обслуживались у указанного механика, упорядочить по ФИО
     /// </summary>
     [Fact]
-    public void GetWorksByType_ReturnsOnlyOilChange()
+    public void GetClientsByMechanic_ReturnsSortedByName()
     {
-        var targetType = WorkType.OilChange;
-        var expectedWorkIds = new[] { 1, 8 };
+        var targetMechanicId = 1;
+        var expectedNames = new[]
+        {
+            "Волкова Анна Владимировна",
+            "Иванов Иван Иванович",
+            "Соколова Наталья Игоревна"
+        };
 
-        var resultWorkIds = fixture.ServiceWorks
-            .Where(w => w.WorkType == targetType)
-            .Select(w => w.Id)
-            .OrderBy(id => id)
+        var result = fixture.OrderMechanics
+            .Where(om => om.MechanicId == targetMechanicId)
+            .Select(om => om.ServiceOrder.Client.FullName)
+            .Distinct()
+            .OrderBy(n => n)
             .ToList();
 
-        Assert.Equal(expectedWorkIds, resultWorkIds);
+        Assert.Equal(expectedNames, result);
     }
 
     /// <summary>
-    /// Тест 8: Получение использований конкретной запчасти
+    /// Тест 3: Вывести информацию о количестве повторных обращений клиентов за последний месяц
     /// </summary>
     [Fact]
-    public void GetPartUsagesByPart_ReturnsOnlyForSpecificPart()
+    public void GetRepeatClientsCount_ReturnsCorrectCount()
     {
-        var targetPartId = 1;
-        var expectedUsageIds = new[] { 1, 7 };
+        var monthAgo = new DateTime(2026, 9, 1);
+        var expectedCount = 2;
 
-        var resultUsageIds = fixture.PartUsages
-            .Where(u => u.PartId == targetPartId)
-            .Select(u => u.Id)
-            .OrderBy(id => id)
+        var repeatClientsCount = fixture.ServiceOrders
+            .Where(o => o.ReceptionDate >= monthAgo)
+            .GroupBy(o => o.ClientId)
+            .Count(g => g.Count() > 1);
+
+        Assert.Equal(expectedCount, repeatClientsCount);
+    }
+
+    /// <summary>
+    /// Тест 4: Для выбранного заказа подсчитать суммарную стоимость работ
+    /// </summary>
+    [Fact]
+    public void GetOrderTotalCost_ReturnsCorrectSum()
+    {
+        var targetOrderId = 1;
+        var expectedTotalCost = 6250m;
+
+        var totalCost = fixture.OrderWorks
+            .Where(ow => ow.ServiceOrderId == targetOrderId)
+            .Sum(ow => ow.WorkType.LaborCost);
+
+        Assert.Equal(expectedTotalCost, totalCost);
+    }
+
+    /// <summary>
+    /// Тест 5: Вывести топ 5 наиболее частых видов работ
+    /// </summary>
+    [Fact]
+    public void GetTopFiveWorkTypes_ReturnsTopFive()
+    {
+        var expected = new[]
+        {
+            "Замена масла",
+            "Ремонт двигателя",
+            "Диагностика двигателя",
+            "Замена амортизаторов",
+            "Замена ремня ГРМ"
+        };
+
+        var result = fixture.OrderWorks
+            .GroupBy(ow => ow.WorkType.Name)
+            .Select(g => new { Name = g.Key, Count = g.Count() })
+            .OrderByDescending(x => x.Count)
+            .ThenBy(x => x.Name)
+            .Take(5)
+            .Select(x => x.Name)
             .ToList();
 
-        Assert.Equal(expectedUsageIds, resultUsageIds);
+        Assert.Equal(expected, result);
     }
 }

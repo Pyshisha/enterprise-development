@@ -1,6 +1,4 @@
-﻿using AutoServiceLab.Domain.Enums;
-
-namespace AutoServiceLab.Domain.Entities;
+﻿namespace AutoServiceLab.Domain.Entities;
 
 /// <summary>
 /// Автомобиль клиента автосервиса
@@ -31,26 +29,6 @@ public class Car
     /// Год выпуска автомобиля
     /// </summary>
     public int Year { get; set; }
-
-    /// <summary>
-    /// VIN автомобиля
-    /// </summary>
-    public string? VinCode { get; set; }
-
-    /// <summary>
-    /// Цвет автомобиля
-    /// </summary>
-    public string? Color { get; set; }
-
-    /// <summary>
-    /// Тип автомобиля
-    /// </summary>
-    public CarType? Type { get; set; }
-
-    /// <summary>
-    /// Тип двигателя автомобиля
-    /// </summary>
-    public EngineType? EngineType { get; set; }
 
     /// <summary>
     /// Идентификатор клиента автосервиса

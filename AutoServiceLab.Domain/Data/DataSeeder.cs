@@ -16,16 +16,75 @@ public static class DataSeeder
     {
         return
         [
-            new() { Id = 1, FullName = "Иванов Иван Иванович", Phone = "+7-927-111-11-11" },
-            new() { Id = 2, FullName = "Петрова Мария Сергеевна", Phone = "+7-927-222-22-22" },
-            new() { Id = 3, FullName = "Сидоров Алексей Петрович", Phone = "+7-927-333-33-33" },
-            new() { Id = 4, FullName = "Козлова Елена Дмитриевна", Phone = "+7-927-444-44-44" },
-            new() { Id = 5, FullName = "Морозов Дмитрий Андреевич", Phone = "+7-927-555-55-55" },
-            new() { Id = 6, FullName = "Волкова Анна Владимировна", Phone = "+7-927-666-66-66" },
-            new() { Id = 7, FullName = "Зайцев Артем Олегович", Phone = "+7-927-777-77-77" },
-            new() { Id = 8, FullName = "Соколова Наталья Игоревна", Phone = "+7-927-888-88-88" },
-            new() { Id = 9, FullName = "Кузнецов Максим Романович", Phone = "+7-927-999-99-99" },
-            new() { Id = 10, FullName = "Смирнова Ольга Павловна", Phone = "+7-927-000-00-00" },
+            new Client()
+            {
+                Id = 1,
+                FullName = "Иванов Иван Иванович",
+                Phone = "+7-927-111-11-11"
+            },
+
+            new Client()
+            {
+                Id = 2,
+                FullName = "Петрова Мария Сергеевна",
+                Phone = "+7-927-222-22-22"
+            },
+
+            new Client()
+            {
+                Id = 3,
+                FullName = "Сидоров Алексей Петрович",
+                Phone = "+7-927-333-33-33"
+            },
+
+            new Client()
+            {
+                Id = 4,
+                FullName = "Козлова Елена Дмитриевна",
+                Phone = "+7-927-444-44-44"
+            },
+
+            new Client()
+            {
+                Id = 5,
+                FullName = "Морозов Дмитрий Андреевич",
+                Phone = "+7-927-555-55-55"
+            },
+
+            new Client()
+            {
+                Id = 6,
+                FullName = "Волкова Анна Владимировна",
+                Phone = "+7-927-666-66-66"
+            },
+
+            new Client()
+            {
+                Id = 7,
+                FullName = "Зайцев Артем Олегович",
+                Phone = "+7-927-777-77-77"
+            },
+
+            new Client()
+            {
+                Id = 8,
+                FullName = "Соколова Наталья Игоревна",
+                Phone = "+7-927-888-88-88"
+            },
+
+            new Client()
+            {
+                Id = 9,
+                FullName = "Кузнецов Максим Романович",
+                Phone = "+7-927-999-99-99"
+            },
+
+            new Client()
+            {
+                Id = 10,
+                FullName = "Смирнова Ольга Павловна",
+                Phone = "+7-927-000-00-00"
+            },
         ];
     }
 
@@ -38,22 +97,130 @@ public static class DataSeeder
     {
         var cars = new List<Car>
         {
-            new() { Id = 1, LicensePlate = "А001АА163", Brand = CarBrand.Toyota, Model = "Camry", Year = 2020, ClientId = clients[1].Id },
-            new() { Id = 2, LicensePlate = "В002ВВ163", Brand = CarBrand.BMW, Model = "X5", Year = 2022, ClientId = clients[1].Id },
-            new() { Id = 3, LicensePlate = "С003СС163", Brand = CarBrand.Mercedes, Model = "E-Class", Year = 2021, ClientId = clients[2].Id },
-            new() { Id = 4, LicensePlate = "Е004ЕЕ163", Brand = CarBrand.Audi, Model = "Q7", Year = 2020, ClientId = clients[3].Id },
-            new() { Id = 5, LicensePlate = "К005КК163", Brand = CarBrand.Volkswagen, Model = "Passat", Year = 2019, ClientId = clients[4].Id },
-            new() { Id = 6, LicensePlate = "М006ММ163", Brand = CarBrand.Ford, Model = "Focus", Year = 2021, ClientId = clients[5].Id },
-            new() { Id = 7, LicensePlate = "Н007НН163", Brand = CarBrand.Toyota, Model = "Land Cruiser", Year = 2022, ClientId = clients[6].Id },
-            new() { Id = 8, LicensePlate = "О008ОО163", Brand = CarBrand.Hyundai, Model = "Sonata", Year = 2020, ClientId = clients[7].Id },
-            new() { Id = 9, LicensePlate = "Р009РР163", Brand = CarBrand.Nissan, Model = "X-Trail", Year = 2021, ClientId = clients[8].Id },
-            new() { Id = 10, LicensePlate = "Т010ТТ163", Brand = CarBrand.BMW, Model = "3 Series", Year = 2020, ClientId = clients[9].Id },
+            new()
+            {
+                Id = 1,
+                LicensePlate = "Х011ХХ163",
+                Brand = "Lada",
+                Model = "Granta",
+                Year = 2020,
+                ClientId = clients[0].Id,
+                Client = clients[0]
+            },
+
+            new()
+            {
+                Id = 2,
+                LicensePlate = "А001АА163",
+                Brand = "Toyota",
+                Model = "Camry",
+                Year = 2020,
+                ClientId = clients[1].Id,
+                Client = clients[1]
+            },
+
+            new()
+            {
+                Id = 3,
+                LicensePlate = "В002ВВ163",
+                Brand = "BMW",
+                Model = "X5",
+                Year = 2022,
+                ClientId = clients[1].Id,
+                Client = clients[1]
+            },
+
+            new()
+            {
+                Id = 4,
+                LicensePlate = "С003СС163",
+                Brand = "Mercedes",
+                Model = "E-Class",
+                Year = 2021,
+                ClientId = clients[2].Id,
+                Client = clients[2]
+            },
+
+            new()
+            {
+                Id = 5,
+                LicensePlate = "Е004ЕЕ163",
+                Brand = "Audi",
+                Model = "Q7",
+                Year = 2020,
+                ClientId = clients[3].Id,
+                Client = clients[3]
+            },
+
+            new()
+            {
+                Id = 6,
+                LicensePlate = "К005КК163",
+                Brand = "Volkswagen",
+                Model = "Passat",
+                Year = 2019,
+                ClientId = clients[4].Id,
+                Client = clients[4]
+            },
+
+            new()
+            {
+                Id = 7,
+                LicensePlate = "М006ММ163",
+                Brand = "Ford",
+                Model = "Focus",
+                Year = 2021,
+                ClientId = clients[5].Id,
+                Client = clients[5]
+            },
+
+            new()
+            {
+                Id = 8,
+                LicensePlate = "Н007НН163",
+                Brand = "Toyota",
+                Model = "Land Cruiser",
+                Year = 2022,
+                ClientId = clients[6].Id,
+                Client = clients[6]
+            },
+
+            new()
+            {
+                Id = 9,
+                LicensePlate = "О008ОО163",
+                Brand = "Hyundai",
+                Model = "Sonata",
+                Year = 2020,
+                ClientId = clients[7].Id,
+                Client = clients[7]
+            },
+
+            new()
+            {
+                Id = 10,
+                LicensePlate = "Р009РР163",
+                Brand = "Nissan",
+                Model = "X-Trail",
+                Year = 2021,
+                ClientId = clients[8].Id,
+                Client = clients[8]
+            },
+
+            new()
+            {
+                Id = 11,
+                LicensePlate = "Т010ТТ163",
+                Brand = "BMW",
+                Model = "3 Series",
+                Year = 2020,
+                ClientId = clients[9].Id,
+                Client = clients[9]
+            },
+
         };
 
-        foreach (var car in cars)
-        {
-            clients.First(c => c.Id == car.ClientId).Cars.Add(car);
-        }
+        cars.ForEach(car => clients.FirstOrDefault(client => client.Id == car.ClientId)?.Cars.Add(car));
 
         return cars;
     }
@@ -66,37 +233,205 @@ public static class DataSeeder
     {
         return
         [
-            new() { Id = 1, FullName = "Сидоров Петр Иванович", Phone = "+7-937-111-11-11", Specialization = "Engine", HourlyRate = 2500 },
-            new() { Id = 2, FullName = "Иванов Александр Петрович", Phone = "+7-937-111-11-12", Specialization = "Electrical", HourlyRate = 2200 },
-            new() { Id = 3, FullName = "Петрова Екатерина Сергеевна", Phone = "+7-937-111-11-13", Specialization = "Body", HourlyRate = 2000 },
-            new() { Id = 4, FullName = "Смирнов Денис Андреевич", Phone = "+7-937-111-11-14", Specialization = "Transmission", HourlyRate = 2400 },
-            new() { Id = 5, FullName = "Козлова Ольга Дмитриевна", Phone = "+7-937-111-11-15", Specialization = "Engine", HourlyRate = 1900 },
-            new() { Id = 6, FullName = "Морозов Владимир Игоревич", Phone = "+7-937-111-11-16", Specialization = "Electrical", HourlyRate = 2800 },
-            new() { Id = 7, FullName = "Новикова Мария Олеговна", Phone = "+7-937-111-11-17", Specialization = "Body", HourlyRate = 1700 },
-            new() { Id = 8, FullName = "Федоров Алексей Романович", Phone = "+7-937-111-11-18", Specialization = "Transmission", HourlyRate = 2100 },
-            new() { Id = 9, FullName = "Егоров Михаил Валерьевич", Phone = "+7-937-111-11-19", Specialization = "Engine", HourlyRate = 3000 },
-            new() { Id = 10, FullName = "Тимофеев Илья Андреевич", Phone = "+7-937-111-11-10", Specialization = "Electrical", HourlyRate = 1600 },
+            new Mechanic()
+            {
+                Id = 1,
+                PassportNumber = "1111 111111",
+                FullName = "Сидоров Петр Иванович",
+                Phone = "+7-937-111-11-11",
+                Specialization = MechanicSpecialization.Engine,
+                ExperienceYears = 4
+            },
+
+            new Mechanic()
+            {
+                Id = 2,
+                PassportNumber = "2222 222222",
+                FullName = "Иванов Александр Петрович",
+                Phone = "+7-937-111-11-12",
+                Specialization = MechanicSpecialization.Electrical,
+                ExperienceYears = 6
+            },
+
+            new Mechanic()
+            {
+                Id = 3,
+                PassportNumber = "3333 333333",
+                FullName = "Петрова Екатерина Сергеевна",
+                Phone = "+7-937-111-11-13",
+                Specialization = MechanicSpecialization.Body,
+                ExperienceYears = 8
+            },
+
+            new Mechanic()
+            {
+                Id = 4,
+                PassportNumber = "4444 444444",
+                FullName = "Смирнов Денис Андреевич",
+                Phone = "+7-937-111-11-14",
+                Specialization = MechanicSpecialization.Transmission,
+                ExperienceYears = 5
+            },
+
+            new Mechanic()
+            {
+                Id = 5,
+                PassportNumber = "5555 555555",
+                FullName = "Козлова Ольга Дмитриевна",
+                Phone = "+7-937-111-11-15",
+                Specialization = MechanicSpecialization.Engine,
+                ExperienceYears = 7
+            },
+
+            new Mechanic()
+            {
+                Id = 6,
+                PassportNumber = "6666 666666",
+                FullName = "Морозов Владимир Игоревич",
+                Phone = "+7-937-111-11-16",
+                Specialization = MechanicSpecialization.Electrical,
+                ExperienceYears = 10
+            },
+
+            new Mechanic()
+            {
+                Id = 7,
+                PassportNumber = "7777 777777",
+                FullName = "Новикова Мария Олеговна",
+                Phone = "+7-937-111-11-17",
+                Specialization = MechanicSpecialization.Body,
+                ExperienceYears = 3
+            },
+
+            new Mechanic()
+            {
+                Id = 8,
+                PassportNumber = "8888 888888",
+                FullName = "Федоров Алексей Романович",
+                Phone = "+7-937-111-11-18",
+                Specialization = MechanicSpecialization.Transmission,
+                ExperienceYears = 9
+            },
+
+            new Mechanic()
+            {
+                Id = 9,
+                PassportNumber = "9999 999999",
+                FullName = "Егоров Михаил Валерьевич",
+                Phone = "+7-937-111-11-19",
+                Specialization = MechanicSpecialization.Suspension,
+                ExperienceYears = 12
+            },
+
+            new Mechanic()
+            {
+                Id = 10,
+                PassportNumber = "1010 101010",
+                FullName = "Тимофеев Илья Андреевич",
+                Phone = "+7-937-111-11-10",
+                Specialization = MechanicSpecialization.Brakes,
+                ExperienceYears = 2
+            },
         ];
     }
 
     /// <summary>
-    /// Возвращает список запчастей на складе
+    /// Возвращает список видов работ
     /// </summary>
-    /// <returns>Список запчастей</returns>
-    public static List<Part> GetParts()
+    /// <returns>Список видов работ</returns>
+    public static List<WorkType> GetWorkTypes()
     {
         return
         [
-            new() { Id = 1, Name = "Масло моторное 5W-30", PartNumber = "OIL-001", Category = PartCategory.Oils, PurchasePrice = 4500, SellingPrice = 6000, QuantityInStock = 25 },
-            new() { Id = 2, Name = "Фильтр масляный", PartNumber = "FIL-001", Category = PartCategory.Filters, PurchasePrice = 500, SellingPrice = 800, QuantityInStock = 40 },
-            new() { Id = 3, Name = "Фильтр воздушный", PartNumber = "FIL-002", Category = PartCategory.Filters, PurchasePrice = 700, SellingPrice = 1100, QuantityInStock = 35 },
-            new() { Id = 4, Name = "Колодки передние", PartNumber = "BRK-001", Category = PartCategory.BrakeSystem, PurchasePrice = 2500, SellingPrice = 3800, QuantityInStock = 15 },
-            new() { Id = 5, Name = "Колодки задние", PartNumber = "BRK-002", Category = PartCategory.BrakeSystem, PurchasePrice = 2200, SellingPrice = 3500, QuantityInStock = 12 },
-            new() { Id = 6, Name = "Свечи зажигания", PartNumber = "IGN-001", Category = PartCategory.Ignition, PurchasePrice = 800, SellingPrice = 1400, QuantityInStock = 30 },
-            new() { Id = 7, Name = "Аккумулятор 60Ач", PartNumber = "BAT-001", Category = PartCategory.Batteries, PurchasePrice = 6000, SellingPrice = 8500, QuantityInStock = 8 },
-            new() { Id = 8, Name = "Ремень ГРМ", PartNumber = "BEL-001", Category = PartCategory.Belts, PurchasePrice = 1500, SellingPrice = 2200, QuantityInStock = 10 },
-            new() { Id = 9, Name = "Тормозная жидкость DOT-4", PartNumber = "FLU-001", Category = PartCategory.Oils, PurchasePrice = 600, SellingPrice = 1000, QuantityInStock = 20 },
-            new() { Id = 10, Name = "Шина летняя 225/45 R17", PartNumber = "TIR-001", Category = PartCategory.Tires, PurchasePrice = 15000, SellingPrice = 19000, QuantityInStock = 4 },
+            new WorkType()
+            {
+                Id = 1,
+                Name = "Замена масла",
+                Category = WorkCategory.Maintenance,
+                Duration = 1.0m,
+                LaborCost = 3750
+            },
+
+            new WorkType()
+            {
+                Id = 2,
+                Name = "Диагностика двигателя",
+                Category = WorkCategory.Diagnostics,
+                Duration = 1.5m,
+                LaborCost = 2500
+            },
+
+            new WorkType()
+            {
+                Id = 3,
+                Name = "Ремонт двигателя",
+                Category = WorkCategory.Engine,
+                Duration = 8.0m,
+                LaborCost = 20000
+            },
+
+            new WorkType()
+            {
+                Id = 4,
+                Name = "Замена тормозных колодок",
+                Category = WorkCategory.Brakes,
+                Duration = 2.0m,
+                LaborCost = 5000
+            },
+
+            new WorkType()
+            {
+                Id = 5,
+                Name = "Замена шин",
+                Category = WorkCategory.Suspension,
+                Duration = 1.0m,
+                LaborCost = 2400
+            },
+
+            new WorkType()
+            {
+                Id = 6,
+                Name = "Ремонт проводки",
+                Category = WorkCategory.Electrical,
+                Duration = 3.0m,
+                LaborCost = 6600
+            },
+
+            new WorkType()
+            {
+                Id = 7,
+                Name = "Ремонт АКПП",
+                Category = WorkCategory.Transmission,
+                Duration = 10.0m,
+                LaborCost = 24000
+            },
+
+            new WorkType()
+            {
+                Id = 8,
+                Name = "Кузовной ремонт",
+                Category = WorkCategory.Body,
+                Duration = 6.0m,
+                LaborCost = 15000
+            },
+
+            new WorkType()
+            {
+                Id = 9,
+                Name = "Замена ремня ГРМ",
+                Category = WorkCategory.Engine,
+                Duration = 4.0m,
+                LaborCost = 8000
+            },
+
+            new WorkType()
+            {
+                Id = 10,
+                Name = "Замена амортизаторов",
+                Category = WorkCategory.Suspension,
+                Duration = 3.0m,
+                LaborCost = 6000
+            },
         ];
     }
 
@@ -106,88 +441,397 @@ public static class DataSeeder
     /// <param name="clients">Список клиентов</param>
     /// <param name="cars">Список автомобилей</param>
     /// <returns>Список заказов</returns>
-    public static List<ServiceOrder> GetOrders(List<Client> clients, List<Car> cars)
+    public static List<ServiceOrder> GetServiceOrders(List<Client> clients, List<Car> cars)
     {
-        return
-        [
-            new() { Id = 1, CreatedDate = new DateTime(2026, 1, 5), Status = OrderStatus.Completed, Description = "Замена масла", ClientId = clients[0].Id, CarId = cars[0].Id },
-            new() { Id = 2, CreatedDate = new DateTime(2026, 1, 10), Status = OrderStatus.InProgress, Description = "Стук", ClientId = clients[1].Id, CarId = cars[1].Id },
-            new() { Id = 3, CreatedDate = new DateTime(2026, 1, 15), Status = OrderStatus.Created, Description = "Проверка", ClientId = clients[2].Id, CarId = cars[2].Id },
-            new() { Id = 4, CreatedDate = new DateTime(2026, 1, 20), Status = OrderStatus.WaitingParts, Description = "Скрип", ClientId = clients[3].Id, CarId = cars[3].Id },
-            new() { Id = 5, CreatedDate = new DateTime(2026, 1, 25), Status = OrderStatus.Completed, Description = "Сезонная замена", ClientId = clients[4].Id, CarId = cars[4].Id },
-            new() { Id = 6, CreatedDate = new DateTime(2026, 2, 1), Status = OrderStatus.Cancelled, Description = "Вмятина", ClientId = clients[5].Id, CarId = cars[5].Id },
-            new() { Id = 7, CreatedDate = new DateTime(2026, 2, 5), Status = OrderStatus.InProgress, Description = "Не работает свет", ClientId = clients[6].Id, CarId = cars[6].Id },
-            new() { Id = 8, CreatedDate = new DateTime(2026, 2, 10), Status = OrderStatus.Completed, Description = "Не заводится", ClientId = clients[7].Id, CarId = cars[7].Id },
-            new() { Id = 9, CreatedDate = new DateTime(2026, 2, 15), Status = OrderStatus.Created, Description = "Стук", ClientId = clients[8].Id, CarId = cars[8].Id },
-            new() { Id = 10, CreatedDate = new DateTime(2026, 2, 20), Status = OrderStatus.WaitingParts, Description = "Проблемы", ClientId = clients[9].Id, CarId = cars[9].Id },
-        ];
+        var orders = new List<ServiceOrder>
+        {
+            new()
+            {
+                Id = 1,
+                ReceptionDate = new DateTime(2026, 9, 1),
+                IssueDate = new DateTime(2026, 9, 3),
+                ClientId = clients[0].Id,
+                Client = clients[0],
+                CarId = cars[0].Id,
+                Car = cars[0]
+            },
+
+            new()
+            {
+                Id = 2,
+                ReceptionDate = new DateTime(2026, 9, 5),
+                IssueDate = new DateTime(2026, 9, 7),
+                ClientId = clients[1].Id,
+                Client = clients[1],
+                CarId = cars[1].Id,
+                Car = cars[1]
+            },
+
+            new()
+            {
+                Id = 3,
+                ReceptionDate = new DateTime(2026, 9, 8),
+                IssueDate = null,
+                ClientId = clients[1].Id,
+                Client = clients[1],
+                CarId = cars[2].Id,
+                Car = cars[2]
+            },
+
+            new()
+            {
+                Id = 4,
+                ReceptionDate = new DateTime(2026, 9, 10),
+                IssueDate = new DateTime(2026, 9, 12),
+                ClientId = clients[2].Id,
+                Client = clients[2],
+                CarId = cars[3].Id,
+                Car = cars[3]
+            },
+
+            new()
+            {
+                Id = 5,
+                ReceptionDate = new DateTime(2026, 9, 12),
+                IssueDate = new DateTime(2026, 9, 15),
+                ClientId = clients[3].Id,
+                Client = clients[3],
+                CarId = cars[4].Id,
+                Car = cars[4]
+            },
+
+            new()
+            {
+                Id = 6,
+                ReceptionDate = new DateTime(2026, 9, 15),
+                IssueDate = null,
+                ClientId = clients[3].Id,
+                Client = clients[3],
+                CarId = cars[4].Id,
+                Car = cars[4]
+            },
+
+            new()
+            {
+                Id = 7,
+                ReceptionDate = new DateTime(2026, 9, 18),
+                IssueDate = new DateTime(2026, 9, 20),
+                ClientId = clients[4].Id,
+                Client = clients[4],
+                CarId = cars[5].Id,
+                Car = cars[5]
+            },
+
+            new()
+            {
+                Id = 8,
+                ReceptionDate = new DateTime(2026, 9, 20),
+                IssueDate = new DateTime(2026, 9, 23),
+                ClientId = clients[5].Id,
+                Client = clients[5],
+                CarId = cars[6].Id,
+                Car = cars[6]
+            },
+
+            new()
+            {
+                Id = 9,
+                ReceptionDate = new DateTime(2026, 9, 21),
+                IssueDate = new DateTime(2026, 9, 22),
+                ClientId = clients[6].Id,
+                Client = clients[6],
+                CarId = cars[7].Id,
+                Car = cars[7]
+            },
+
+            new()
+            {
+                Id = 10,
+                ReceptionDate = new DateTime(2026, 9, 22),
+                IssueDate = null,
+                ClientId = clients[7].Id,
+                Client = clients[7],
+                CarId = cars[8].Id,
+                Car = cars[8]
+            },
+
+            new()
+            {
+                Id = 11,
+                ReceptionDate = new DateTime(2026, 9, 25),
+                IssueDate = new DateTime(2026, 9, 27),
+                ClientId = clients[8].Id,
+                Client = clients[8],
+                CarId = cars[9].Id,
+                Car = cars[9]
+            },
+
+            new()
+            {
+                Id = 12,
+                ReceptionDate = new DateTime(2026, 9, 26),
+                IssueDate = null,
+                ClientId = clients[9].Id,
+                Client = clients[9],
+                CarId = cars[10].Id,
+                Car = cars[10]
+            },
+
+        };
+
+        orders.ForEach(order => clients.FirstOrDefault(client => client.Id == order.ClientId)?.Orders.Add(order));
+        orders.ForEach(order => cars.FirstOrDefault(car => car.Id == order.CarId)?.Orders.Add(order));
+
+        return orders;
     }
 
     /// <summary>
-    /// Возвращает список выполненных работ
+    /// Возвращает список связей заказов и видов работ
+    /// </summary>
+    /// <param name="orders">Список заказов</param>
+    /// <param name="workTypes">Список видов работ</param>
+    /// <returns>Список связей заказов и видов работ</returns>
+    public static List<OrderWork> GetOrderWorks(List<ServiceOrder> orders, List<WorkType> workTypes)
+    {
+        var orderWorks = new List<OrderWork>
+        {
+            new()
+            {
+                Id = 1,
+                ServiceOrderId = orders[0].Id,
+                ServiceOrder = orders[0],
+                WorkTypeId = workTypes[0].Id,
+                WorkType = workTypes[0]
+            },
+
+            new()
+            {
+                Id = 2,
+                ServiceOrderId = orders[0].Id,
+                ServiceOrder = orders[0],
+                WorkTypeId = workTypes[1].Id,
+                WorkType = workTypes[1]
+            },
+
+            new()
+            {
+                Id = 3,
+                ServiceOrderId = orders[1].Id,
+                ServiceOrder = orders[1],
+                WorkTypeId = workTypes[2].Id,
+                WorkType = workTypes[2]
+            },
+
+            new()
+            {
+                Id = 4,
+                ServiceOrderId = orders[2].Id,
+                ServiceOrder = orders[2],
+                WorkTypeId = workTypes[3].Id,
+                WorkType = workTypes[3]
+            },
+
+            new()
+            {
+                Id = 5,
+                ServiceOrderId = orders[3].Id,
+                ServiceOrder = orders[3],
+                WorkTypeId = workTypes[4].Id,
+                WorkType = workTypes[4]
+            },
+
+            new()
+            {
+                Id = 6,
+                ServiceOrderId = orders[4].Id,
+                ServiceOrder = orders[4],
+                WorkTypeId = workTypes[5].Id,
+                WorkType = workTypes[5]
+            },
+
+            new()
+            {
+                Id = 7,
+                ServiceOrderId = orders[5].Id,
+                ServiceOrder = orders[5],
+                WorkTypeId = workTypes[6].Id,
+                WorkType = workTypes[6]
+            },
+
+            new()
+            {
+                Id = 8,
+                ServiceOrderId = orders[6].Id,
+                ServiceOrder = orders[6],
+                WorkTypeId = workTypes[7].Id,
+                WorkType = workTypes[7]
+            },
+
+            new()
+            {
+                Id = 9,
+                ServiceOrderId = orders[7].Id,
+                ServiceOrder = orders[7],
+                WorkTypeId = workTypes[8].Id,
+                WorkType = workTypes[8]
+            },
+
+            new()
+            {
+                Id = 10,
+                ServiceOrderId = orders[8].Id,
+                ServiceOrder = orders[8],
+                WorkTypeId = workTypes[9].Id,
+                WorkType = workTypes[9]
+            },
+
+            new()
+            {
+                Id = 11,
+                ServiceOrderId = orders[9].Id,
+                ServiceOrder = orders[9],
+                WorkTypeId = workTypes[0].Id,
+                WorkType = workTypes[0]
+            },
+
+            new()
+            {
+                Id = 12,
+                ServiceOrderId = orders[10].Id,
+                ServiceOrder = orders[10],
+                WorkTypeId = workTypes[2].Id,
+                WorkType = workTypes[2]
+            },
+        };
+
+        orderWorks.ForEach(ow => ow.ServiceOrder.OrderWorks.Add(ow));
+        orderWorks.ForEach(ow => ow.WorkType.OrderWorks.Add(ow));
+
+        return orderWorks;
+    }
+
+    /// <summary>
+    /// Возвращает список связей заказов и механиков
     /// </summary>
     /// <param name="orders">Список заказов</param>
     /// <param name="mechanics">Список механиков</param>
-    /// <returns>Список работ</returns>
-    public static List<WorkType> GetServiceWorks(List<ServiceOrder> orders, List<Mechanic> mechanics)
+    /// <returns>Список связей заказов и механиков</returns>
+    public static List<OrderMechanic> GetOrderMechanics(List<ServiceOrder> orders, List<Mechanic> mechanics)
     {
-        return
-        [
-            new() { Id = 1, WorkType = WorkType.OilChange, Description = "Замена масла", LaborCost = 3750, ServiceOrderId = orders[0].Id, MechanicId = mechanics[0].Id },
-            new() { Id = 2, WorkType = WorkType.Diagnostics, Description = "Диагностика", LaborCost = 2500, ServiceOrderId = orders[0].Id, MechanicId = mechanics[1].Id },
-            new() { Id = 3, WorkType = WorkType.EngineRepair, Description = "Ремонт двигателя", LaborCost = 20000, ServiceOrderId = orders[1].Id, MechanicId = mechanics[2].Id },
-            new() { Id = 4, WorkType = WorkType.BrakeRepair, Description = "Замена колодок", LaborCost = 5000, ServiceOrderId = orders[3].Id, MechanicId = mechanics[3].Id },
-            new() { Id = 5, WorkType = WorkType.TireReplacement, Description = "Замена шин", LaborCost = 2400, ServiceOrderId = orders[4].Id, MechanicId = mechanics[4].Id },
-            new() { Id = 6, WorkType = WorkType.ElectricalRepair, Description = "Ремонт проводки", LaborCost = 6600, ServiceOrderId = orders[6].Id, MechanicId = mechanics[5].Id },
-            new() { Id = 7, WorkType = WorkType.Diagnostics, Description = "Диагностика электрики", LaborCost = 1100, ServiceOrderId = orders[6].Id, MechanicId = mechanics[6].Id },
-            new() { Id = 8, WorkType = WorkType.OilChange, Description = "Замена масла", LaborCost = 2500, ServiceOrderId = orders[9].Id, MechanicId = mechanics[7].Id },
-            new() { Id = 9, WorkType = WorkType.EngineRepair, Description = "Ремонт охлаждения", LaborCost = 12500, ServiceOrderId = orders[9].Id, MechanicId = mechanics[8].Id },
-            new() { Id = 10, WorkType = WorkType.TransmissionRepair, Description = "Ремонт АКПП", LaborCost = 24000, ServiceOrderId = orders[9].Id, MechanicId = mechanics[9].Id },
-        ];
-    }
+        var orderMechanics = new List<OrderMechanic>
+        {
+            new()
+            {
+                Id = 1,
+                ServiceOrderId = orders[0].Id,
+                ServiceOrder = orders[0],
+                MechanicId = mechanics[0].Id,
+                Mechanic = mechanics[0]
+            },
 
-    /// <summary>
-    /// Возвращает список использований запчастей
-    /// </summary>
-    /// <param name="orders">Список заказов</param>
-    /// <param name="parts">Список запчастей</param>
-    /// <returns>Список использований запчастей</returns>
-    public static List<PartUsage> GetPartUsages(List<ServiceOrder> orders, List<Part> parts)
-    {
-        return
-        [
-            new() { Id = 1, Quantity = 1, PriceAtTime = 6000, PartId = parts[0].Id, ServiceOrderId = orders[0].Id },
-            new() { Id = 2, Quantity = 1, PriceAtTime = 800, PartId = parts[1].Id, ServiceOrderId = orders[0].Id },
-            new() { Id = 3, Quantity = 2, PriceAtTime = 3800, PartId = parts[3].Id, ServiceOrderId = orders[3].Id },
-            new() { Id = 4, Quantity = 4, PriceAtTime = 19000, PartId = parts[9].Id, ServiceOrderId = orders[4].Id },
-            new() { Id = 5, Quantity = 1, PriceAtTime = 1400, PartId = parts[5].Id, ServiceOrderId = orders[6].Id },
-            new() { Id = 6, Quantity = 1, PriceAtTime = 8500, PartId = parts[6].Id, ServiceOrderId = orders[7].Id },
-            new() { Id = 7, Quantity = 1, PriceAtTime = 6000, PartId = parts[0].Id, ServiceOrderId = orders[9].Id },
-            new() { Id = 8, Quantity = 1, PriceAtTime = 800, PartId = parts[1].Id, ServiceOrderId = orders[9].Id },
-            new() { Id = 9, Quantity = 1, PriceAtTime = 6800, PartId = parts[9].Id, ServiceOrderId = orders[9].Id },
-            new() { Id = 10, Quantity = 1, PriceAtTime = 2200, PartId = parts[7].Id, ServiceOrderId = orders[1].Id },
-        ];
-    }
+            new()
+            {
+                Id = 2,
+                ServiceOrderId = orders[1].Id,
+                ServiceOrder = orders[1],
+                MechanicId = mechanics[4].Id,
+                Mechanic = mechanics[4]
+            },
 
-    /// <summary>
-    /// Возвращает список счетов на оплату
-    /// </summary>
-    /// <param name="orders">Список заказов</param>
-    /// <returns>Список счетов</returns>
-    public static List<Invoice> GetInvoices(List<ServiceOrder> orders)
-    {
-        return
-        [
-            new() { Id = 1, InvoiceNumber = "INV-2026-000001", InvoiceDate = new DateTime(2026, 1, 7), DueDate = new DateTime(2026, 1, 21), Amount = 7050, PaidAmount = 7050, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[0].Id },
-            new() { Id = 2, InvoiceNumber = "INV-2026-000002", InvoiceDate = new DateTime(2026, 1, 12), DueDate = new DateTime(2026, 1, 26), Amount = 20000, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[1].Id },
-            new() { Id = 3, InvoiceNumber = "INV-2026-000003", InvoiceDate = new DateTime(2026, 1, 27), DueDate = new DateTime(2026, 2, 10), Amount = 76000, PaidAmount = 76000, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Cash, ServiceOrderId = orders[4].Id },
-            new() { Id = 4, InvoiceNumber = "INV-2026-000004", InvoiceDate = new DateTime(2026, 2, 8), DueDate = new DateTime(2026, 2, 22), Amount = 9100, PaidAmount = 4500, PaymentStatus = PaymentStatus.PartiallyPaid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[6].Id },
-            new() { Id = 5, InvoiceNumber = "INV-2026-000005", InvoiceDate = new DateTime(2026, 2, 13), DueDate = new DateTime(2026, 2, 27), Amount = 11000, PaidAmount = 11000, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[7].Id },
-            new() { Id = 6, InvoiceNumber = "INV-2026-000006", InvoiceDate = new DateTime(2026, 2, 28), DueDate = new DateTime(2026, 3, 14), Amount = 9700, PaidAmount = 9700, PaymentStatus = PaymentStatus.Paid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[9].Id },
-            new() { Id = 7, InvoiceNumber = "INV-2026-000007", InvoiceDate = new DateTime(2026, 3, 5), DueDate = new DateTime(2026, 3, 19), Amount = 12500, PaidAmount = 6000, PaymentStatus = PaymentStatus.PartiallyPaid, PaymentMethod = PaymentMethod.Card, ServiceOrderId = orders[9].Id },
-            new() { Id = 8, InvoiceNumber = "INV-2026-000008", InvoiceDate = new DateTime(2026, 2, 25), DueDate = new DateTime(2026, 3, 11), Amount = 30800, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[9].Id },
-            new() { Id = 9, InvoiceNumber = "INV-2026-000009", InvoiceDate = new DateTime(2026, 1, 22), DueDate = new DateTime(2026, 2, 5), Amount = 13100, PaidAmount = 0, PaymentStatus = PaymentStatus.Unpaid, ServiceOrderId = orders[3].Id },
-            new() { Id = 10, InvoiceNumber = "INV-2026-000010", InvoiceDate = new DateTime(2026, 2, 1), DueDate = new DateTime(2026, 2, 15), Amount = 0, PaidAmount = 0, PaymentStatus = PaymentStatus.Refunded, ServiceOrderId = orders[5].Id },
-        ];
+            new()
+            {
+                Id = 3,
+                ServiceOrderId = orders[2].Id,
+                ServiceOrder = orders[2],
+                MechanicId = mechanics[9].Id,
+                Mechanic = mechanics[9]
+            },
+
+            new()
+            {
+                Id = 4,
+                ServiceOrderId = orders[3].Id,
+                ServiceOrder = orders[3],
+                MechanicId = mechanics[8].Id,
+                Mechanic = mechanics[8]
+            },
+
+            new()
+            {
+                Id = 5,
+                ServiceOrderId = orders[4].Id,
+                ServiceOrder = orders[4],
+                MechanicId = mechanics[1].Id,
+                Mechanic = mechanics[1]
+            },
+
+            new()
+            {
+                Id = 6,
+                ServiceOrderId = orders[5].Id,
+                ServiceOrder = orders[5],
+                MechanicId = mechanics[3].Id,
+                Mechanic = mechanics[3]
+            },
+
+            new()
+            {
+                Id = 7,
+                ServiceOrderId = orders[6].Id,
+                ServiceOrder = orders[6],
+                MechanicId = mechanics[2].Id,
+                Mechanic = mechanics[2]
+            },
+
+            new()
+            {
+                Id = 8,
+                ServiceOrderId = orders[7].Id,
+                ServiceOrder = orders[7],
+                MechanicId = mechanics[0].Id,
+                Mechanic = mechanics[0]
+            },
+
+            new()
+            {
+                Id = 9,
+                ServiceOrderId = orders[8].Id,
+                ServiceOrder = orders[8],
+                MechanicId = mechanics[8].Id,
+                Mechanic = mechanics[8]
+            },
+
+            new()
+            {
+                Id = 10,
+                ServiceOrderId = orders[9].Id,
+                ServiceOrder = orders[9],
+                MechanicId = mechanics[0].Id,
+                Mechanic = mechanics[0]
+            },
+
+            new()
+            {
+                Id = 11,
+                ServiceOrderId = orders[10].Id,
+                ServiceOrder = orders[10],
+                MechanicId = mechanics[4].Id,
+                Mechanic = mechanics[4]
+            },
+
+            new()
+            {
+                Id = 12,
+                ServiceOrderId = orders[11].Id,
+                ServiceOrder = orders[11],
+                MechanicId = mechanics[4].Id,
+                Mechanic = mechanics[4]
+            },
+        };
+
+        orderMechanics.ForEach(om => om.ServiceOrder.OrderMechanics.Add(om));
+        orderMechanics.ForEach(om => om.Mechanic.OrderMechanics.Add(om));
+
+        return orderMechanics;
     }
 }

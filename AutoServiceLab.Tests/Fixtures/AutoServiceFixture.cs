@@ -24,14 +24,9 @@ public class AutoServiceFixture
     public readonly List<Mechanic> Mechanics;
 
     /// <summary>
-    /// Список запчастей
+    /// Список видов работ
     /// </summary>
-    public readonly List<Part> Parts;
-
-    /// <summary>
-    /// Список использований запчастей
-    /// </summary>
-    public readonly List<PartUsage> PartUsages;
+    public readonly List<WorkType> WorkTypes;
 
     /// <summary>
     /// Список заказов
@@ -39,14 +34,14 @@ public class AutoServiceFixture
     public readonly List<ServiceOrder> ServiceOrders;
 
     /// <summary>
-    /// Список работ
+    /// Список связей заказов и видов работ
     /// </summary>
-    public readonly List<WorkType> ServiceWorks;
+    public readonly List<OrderWork> OrderWorks;
 
     /// <summary>
-    /// Список счетов
+    /// Список связей заказов и механиков
     /// </summary>
-    public readonly List<Invoice> Invoices;
+    public readonly List<OrderMechanic> OrderMechanics;
 
     /// <summary>
     /// Создаёт тестовый набор данных
@@ -56,10 +51,9 @@ public class AutoServiceFixture
         Clients = DataSeeder.GetClients();
         Cars = DataSeeder.GetCars(Clients);
         Mechanics = DataSeeder.GetMechanics();
-        Parts = DataSeeder.GetParts();
-        ServiceOrders = DataSeeder.GetOrders(Clients, Cars);
-        PartUsages = DataSeeder.GetPartUsages(ServiceOrders, Parts);
-        ServiceWorks = DataSeeder.GetServiceWorks(ServiceOrders, Mechanics);
-        Invoices = DataSeeder.GetInvoices(ServiceOrders);
+        WorkTypes = DataSeeder.GetWorkTypes();
+        ServiceOrders = DataSeeder.GetServiceOrders(Clients, Cars);
+        OrderWorks = DataSeeder.GetOrderWorks(ServiceOrders, WorkTypes);
+        OrderMechanics = DataSeeder.GetOrderMechanics(ServiceOrders, Mechanics);
     }
 }

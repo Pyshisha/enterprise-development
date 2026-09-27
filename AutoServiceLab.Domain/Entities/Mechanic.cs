@@ -38,19 +38,9 @@ public class Mechanic
     public int ExperienceYears { get; set; }
 
     /// <summary>
-    /// Доступность механика
-    /// </summary>
-    public bool IsAvailable { get; set; }
-
-    /// <summary>
-    /// Дата приёма на работу
-    /// </summary>
-    public DateTime HireDate { get; set; } = DateTime.Now;
-
-    /// <summary>
     /// Работы механика
     /// </summary>
-    public List<WorkType> Works { get; set; } = [];
+    public List<OrderMechanic> OrderMechanics { get; set; } = [];
 
     /// <summary>
     /// Возвращает строковое представление механика

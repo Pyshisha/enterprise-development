@@ -3,9 +3,9 @@
 namespace AutoServiceLab.Domain.Entities;
 
 /// <summary>
-/// Выполненная работа в заказе
+/// Вид работ
 /// </summary>
-public class ServiceWork
+public class WorkType
 {
     /// <summary>
     /// Идентификатор работы
@@ -13,19 +13,19 @@ public class ServiceWork
     public int Id { get; set; }
 
     /// <summary>
-    /// Тип работы
+    /// Название работы
     /// </summary>
-    public required WorkType WorkType { get; set; }
+    public required string Name { get; set; }
 
     /// <summary>
-    /// Описание работы
+    /// Категория работы
     /// </summary>
-    public required string Description { get; set; }
+    public required WorkCategory Category { get; set; }
 
     /// <summary>
-    /// Трудозатраты в часах
+    /// Продолжительность работы в часах
     /// </summary>
-    public decimal LaborHours { get; set; }
+    public decimal Duration { get; set; }
 
     /// <summary>
     /// Стоимость работы
@@ -33,37 +33,7 @@ public class ServiceWork
     public decimal LaborCost { get; set; }
 
     /// <summary>
-    /// Дата выполнения работы
+    /// Заказы
     /// </summary>
-    public DateTime WorkDate { get; set; } = DateTime.Now;
-
-    /// <summary>
-    /// Гарантийная работа
-    /// </summary>
-    public bool IsWarranty { get; set; }
-
-    /// <summary>
-    /// Примечания к работе
-    /// </summary>
-    public string? Notes { get; set; }
-
-    /// <summary>
-    /// Идентификатор заказа
-    /// </summary>
-    public int ServiceOrderId { get; set; }
-
-    /// <summary>
-    /// Заказ
-    /// </summary>
-    public ServiceOrder ServiceOrder { get; set; } = null!;
-
-    /// <summary>
-    /// Идентификатор механика
-    /// </summary>
-    public int? MechanicId { get; set; }
-
-    /// <summary>
-    /// Механик
-    /// </summary>
-    public Mechanic? Mechanic { get; set; }
+    public List<OrderWork> OrderWorks { get; set; } = [];
 }
