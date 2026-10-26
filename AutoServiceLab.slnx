@@ -1,8 +1,8 @@
 <Solution>
-  <Project Path="AutoServiceLab.Api/AutoServiceLab.Api.csproj" Id="dd49dd45-e996-48ad-a40c-7df26eeeb392" />
-  <Project Path="D:/AutoService/AutoServiceLab/AutoServiceLab.Application.Contracts/AutoServiceLab.Application.Contracts.csproj" Id="a450dd0c-f897-47bb-a09c-4453f84d9d9c" />
-  <Project Path="D:/AutoService/AutoServiceLab/AutoServiceLab.Application/AutoServiceLab.Application.csproj" Id="34a52928-399e-4faf-858f-edecd7cb0e7b" />
-  <Project Path="D:/AutoService/AutoServiceLab/AutoServiceLab.Domain/AutoServiceLab.Domain.csproj" />
-  <Project Path="D:/AutoService/AutoServiceLab/AutoServiceLab.Infrastructure.InMemory/AutoServiceLab.Infrastructure.InMemory.csproj" Id="6db40ec1-2655-485f-9dde-38b656fc67c1" />
-  <Project Path="D:/AutoService/AutoServiceLab/AutoServiceLab.Tests/AutoServiceLab.Tests.csproj" />
+  <Project Path="AutoServiceLab.Api/AutoServiceLab.Api.csproj" />
+  <Project Path="AutoServiceLab.Application.Contracts/AutoServiceLab.Application.Contracts.csproj" />
+  <Project Path="AutoServiceLab.Application/AutoServiceLab.Application.csproj" />
+  <Project Path="AutoServiceLab.Domain/AutoServiceLab.Domain.csproj" />
+  <Project Path="AutoServiceLab.Infrastructure.InMemory/AutoServiceLab.Infrastructure.InMemory.csproj" />
+  <Project Path="AutoServiceLab.Tests/AutoServiceLab.Tests.csproj" />
 </Solution>
