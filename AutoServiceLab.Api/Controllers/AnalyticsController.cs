@@ -1,4 +1,5 @@
 ﻿using AutoServiceLab.Application.Contracts.Interfaces;
+using AutoServiceLab.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoServiceLab.Api.Controllers;
@@ -16,7 +17,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("mechanics-by-category")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult GetMechanicsByCategory([FromQuery] string category)
+    public IActionResult GetMechanicsByCategory([FromQuery] MechanicSpecialization category)
     {
         try
         {

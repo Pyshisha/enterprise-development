@@ -1,6 +1,7 @@
 ﻿using AutoServiceLab.Application.Contracts.DTOs.Clients;
 using AutoServiceLab.Application.Contracts.DTOs.Mechanics;
 using AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
+using AutoServiceLab.Domain.Enums;
 
 namespace AutoServiceLab.Application.Contracts.Interfaces;
 
@@ -12,7 +13,7 @@ public interface IAnalyticsService
     /// <summary>
     /// Механики по выбранной категории работ
     /// </summary>
-    public IList<MechanicDto> GetMechanicsByWorkCategory(string category);
+    public IList<MechanicDto> GetMechanicsByWorkCategory(MechanicSpecialization category);
 
     /// <summary>
     /// Клиенты указанного механика, отсортированные по ФИО

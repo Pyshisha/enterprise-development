@@ -2,6 +2,7 @@
 using AutoServiceLab.Application.Contracts.DTOs.Mechanics;
 using AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
+using AutoServiceLab.Domain.Enums;
 using AutoServiceLab.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -20,12 +21,12 @@ public class AnalyticsService(
     ILogger<AnalyticsService> logger) : IAnalyticsService
 {
     /// <inheritdoc />
-    public IList<MechanicDto> GetMechanicsByWorkCategory(string category)
+    public IList<MechanicDto> GetMechanicsByWorkCategory(MechanicSpecialization category)
     {
         logger.LogInformation("Получение механиков по категории работ: {Category}", category);
 
         var result = mechanicRepository.GetAll()
-            .Where(m => m.Specialization.ToString().Equals(category, StringComparison.OrdinalIgnoreCase))
+            .Where(m => m.Specialization == category)
             .Select(m => new MechanicDto(m.Id, m.FullName, m.Specialization, m.ExperienceYears))
             .ToList();
 
