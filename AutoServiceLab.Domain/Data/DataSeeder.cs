@@ -1,5 +1,5 @@
 ﻿using AutoServiceLab.Domain.Entities;
-using AutoServiceLab.Domain.Enums;
+using AutoServiceLab.Shared.Enums;
 
 namespace AutoServiceLab.Domain.Data;
 

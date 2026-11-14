@@ -6,31 +6,33 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class WorkTypeRepository : IWorkTypeRepository
 {
-    /// <inheritdoc />
-    public WorkType? Get(int id) => AutoServiceData.WorkTypes.FirstOrDefault(w => w.Id == id);
+    private readonly List<WorkType> _workTypes = AutoServiceData.WorkTypes;
 
     /// <inheritdoc />
-    public IReadOnlyList<WorkType> GetAll() => AutoServiceData.WorkTypes;
+    public WorkType? Get(int id) => _workTypes.FirstOrDefault(w => w.Id == id);
+
+    /// <inheritdoc />
+    public IReadOnlyList<WorkType> GetAll() => _workTypes;
 
     /// <inheritdoc />
     public void Add(WorkType entity)
     {
-        entity.Id = AutoServiceData.WorkTypes.Count == 0 ? 1 : AutoServiceData.WorkTypes.Max(w => w.Id) + 1;
-        AutoServiceData.WorkTypes.Add(entity);
+        entity.Id = _workTypes.Count == 0 ? 1 : _workTypes.Max(w => w.Id) + 1;
+        _workTypes.Add(entity);
     }
 
     /// <inheritdoc />
     public void Update(WorkType entity)
     {
-        var index = AutoServiceData.WorkTypes.FindIndex(w => w.Id == entity.Id);
+        var index = _workTypes.FindIndex(w => w.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException();
-        AutoServiceData.WorkTypes[index] = entity;
+        _workTypes[index] = entity;
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
         var w = Get(id);
-        return w != null && AutoServiceData.WorkTypes.Remove(w);
+        return w != null && _workTypes.Remove(w);
     }
 }

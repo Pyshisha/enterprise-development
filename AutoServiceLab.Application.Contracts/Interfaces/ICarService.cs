@@ -1,4 +1,4 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Cars;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Cars;
 
 namespace AutoServiceLab.Application.Contracts.Interfaces;
 

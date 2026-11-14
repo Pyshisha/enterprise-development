@@ -1,4 +1,4 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
+﻿using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 
 namespace AutoServiceLab.Application.Contracts.Interfaces;
 

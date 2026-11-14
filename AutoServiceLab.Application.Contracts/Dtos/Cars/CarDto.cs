@@ -1,4 +1,4 @@
-﻿namespace AutoServiceLab.Application.Contracts.DTOs.Cars;
+﻿namespace AutoServiceLab.Application.Contracts.Dtos.Cars;
 
 /// <summary>
 /// DTO для автомобиля

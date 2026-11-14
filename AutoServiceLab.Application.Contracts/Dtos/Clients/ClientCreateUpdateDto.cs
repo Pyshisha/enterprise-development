@@ -1,4 +1,4 @@
-﻿namespace AutoServiceLab.Application.Contracts.DTOs.Clients;
+﻿namespace AutoServiceLab.Application.Contracts.Dtos.Clients;
 
 /// <summary>
 /// DTO для создания или обновления клиента

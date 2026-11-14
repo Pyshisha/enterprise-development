@@ -1,5 +1,7 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Clients;
-using AutoServiceLab.Application.Contracts.DTOs.ServiceOrders;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
+using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
 using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
@@ -71,7 +73,11 @@ public class ClientService(
         logger.LogInformation("Получение заказов клиента с ID: {ClientId}", clientId);
         return orderRepository.GetAll()
             .Where(o => o.ClientId == clientId)
-            .Select(o => new ServiceOrderDto(o.Id, o.ReceptionDate, o.IssueDate, o.ClientId, o.Client?.FullName ?? "", o.CarId, o.Car?.Model ?? ""))
+            .Select(o => new ServiceOrderDto(
+                o.Id, o.ReceptionDate, o.IssueDate, o.ClientId, o.Client?.FullName ?? "", o.CarId, o.Car?.Model ?? "",
+                new List<WorkTypeDto>(),
+                new List<MechanicDto>()
+            ))
             .ToList();
     }
 }

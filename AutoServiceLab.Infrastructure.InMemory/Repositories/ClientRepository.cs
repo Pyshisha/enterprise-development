@@ -9,31 +9,33 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 /// </summary>
 public class ClientRepository : IClientRepository
 {
-    /// <inheritdoc />
-    public Client? Get(int id) => AutoServiceData.Clients.FirstOrDefault(c => c.Id == id);
+    private readonly List<Client> _clients = AutoServiceData.Clients;
 
     /// <inheritdoc />
-    public IReadOnlyList<Client> GetAll() => AutoServiceData.Clients;
+    public Client? Get(int id) => _clients.FirstOrDefault(c => c.Id == id);
+
+    /// <inheritdoc />
+    public IReadOnlyList<Client> GetAll() => _clients;
 
     /// <inheritdoc />
     public void Add(Client entity)
     {
-        entity.Id = AutoServiceData.Clients.Count == 0 ? 1 : AutoServiceData.Clients.Max(c => c.Id) + 1;
-        AutoServiceData.Clients.Add(entity);
+        entity.Id = _clients.Count == 0 ? 1 : _clients.Max(c => c.Id) + 1;
+        _clients.Add(entity);
     }
 
     /// <inheritdoc />
     public void Update(Client entity)
     {
-        var index = AutoServiceData.Clients.FindIndex(c => c.Id == entity.Id);
+        var index = _clients.FindIndex(c => c.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException($"Клиент {entity.Id} не найден");
-        AutoServiceData.Clients[index] = entity;
+        _clients[index] = entity;
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
         var client = Get(id);
-        return client != null && AutoServiceData.Clients.Remove(client);
+        return client != null && _clients.Remove(client);
     }
 }

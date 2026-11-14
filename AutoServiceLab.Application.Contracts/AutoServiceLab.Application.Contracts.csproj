@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoServiceLab.Domain\AutoServiceLab.Domain.csproj" />
+    <ProjectReference Include="..\AutoServiceLab.Shared\AutoServiceLab.Shared.csproj" />
   </ItemGroup>
 
 </Project>

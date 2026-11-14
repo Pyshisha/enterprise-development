@@ -6,31 +6,33 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class CarRepository : ICarRepository
 {
-    /// <inheritdoc />
-    public Car? Get(int id) => AutoServiceData.Cars.FirstOrDefault(c => c.Id == id);
+    private readonly List<Car> _cars = AutoServiceData.Cars;
 
     /// <inheritdoc />
-    public IReadOnlyList<Car> GetAll() => AutoServiceData.Cars;
+    public Car? Get(int id) => _cars.FirstOrDefault(c => c.Id == id);
+
+    /// <inheritdoc />
+    public IReadOnlyList<Car> GetAll() => _cars;
 
     /// <inheritdoc />
     public void Add(Car entity)
     {
-        entity.Id = AutoServiceData.Cars.Count == 0 ? 1 : AutoServiceData.Cars.Max(c => c.Id) + 1;
-        AutoServiceData.Cars.Add(entity);
+        entity.Id = _cars.Count == 0 ? 1 : _cars.Max(c => c.Id) + 1;
+        _cars.Add(entity);
     }
 
     /// <inheritdoc />
     public void Update(Car entity)
     {
-        var index = AutoServiceData.Cars.FindIndex(c => c.Id == entity.Id);
+        var index = _cars.FindIndex(c => c.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException($"Автомобиль {entity.Id} не найден");
-        AutoServiceData.Cars[index] = entity;
+        _cars[index] = entity;
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
         var car = Get(id);
-        return car != null && AutoServiceData.Cars.Remove(car);
+        return car != null && _cars.Remove(car);
     }
 }

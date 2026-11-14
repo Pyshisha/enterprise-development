@@ -1,5 +1,5 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Mechanics;
-using AutoServiceLab.Application.Contracts.DTOs.ServiceOrders;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
 
 namespace AutoServiceLab.Application.Contracts.Interfaces;
 

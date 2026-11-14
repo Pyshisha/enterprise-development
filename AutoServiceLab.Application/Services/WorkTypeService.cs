@@ -1,4 +1,4 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
+﻿using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
 using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;

@@ -1,6 +1,6 @@
-﻿using AutoServiceLab.Domain.Enums;
+﻿using AutoServiceLab.Shared.Enums;
 
-namespace AutoServiceLab.Application.Contracts.DTOs.Mechanics;
+namespace AutoServiceLab.Application.Contracts.Dtos.Mechanics;
 
 /// <summary>
 /// DTO для создания или обновления механика

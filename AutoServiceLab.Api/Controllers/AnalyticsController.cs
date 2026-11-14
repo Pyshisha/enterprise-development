@@ -1,5 +1,8 @@
-﻿using AutoServiceLab.Application.Contracts.Interfaces;
-using AutoServiceLab.Domain.Enums;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
+using AutoServiceLab.Application.Contracts.Interfaces;
+using AutoServiceLab.Shared.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoServiceLab.Api.Controllers;
@@ -15,7 +18,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// Механики по категории работ
     /// </summary>
     [HttpGet("mechanics-by-category")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IList<MechanicDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetMechanicsByCategory([FromQuery] MechanicSpecialization category)
     {
@@ -35,7 +38,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// Клиенты механика
     /// </summary>
     [HttpGet("clients-by-mechanic/{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IList<ClientDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClientsByMechanic(int id)
     {
@@ -55,7 +58,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// Повторные обращения за последний месяц
     /// </summary>
     [HttpGet("repeat-clients")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetRepeatClients()
     {
@@ -75,7 +78,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// Стоимость работ заказа
     /// </summary>
     [HttpGet("order-cost/{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetOrderCost(int id)
     {
@@ -95,7 +98,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// Топ-5 видов работ
     /// </summary>
     [HttpGet("top-worktypes")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IList<WorkTypeDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetTopWorkTypes()
     {

@@ -22,7 +22,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<IList<TDto>> GetAll()
+    public virtual ActionResult<IList<TDto>> GetAll()
     {
         try
         {
@@ -44,7 +44,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<TDto> Get(TKey id)
+    public virtual ActionResult<TDto> Get(TKey id)
     {
         try
         {
@@ -71,7 +71,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<TDto> Post(TCreateUpdateDto dto)
+    public virtual ActionResult<TDto> Post(TCreateUpdateDto dto)
     {
         try
         {
@@ -104,7 +104,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<TDto> Update(TCreateUpdateDto dto, TKey id)
+    public virtual ActionResult<TDto> Update(TCreateUpdateDto dto, TKey id)
     {
         try
         {
@@ -135,26 +135,15 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult Delete(TKey id)
+    public virtual IActionResult Delete(TKey id)
     {
         try
         {
             logger.LogInformation("Удаление элемента типа {DtoType} с Id {Id}", typeof(TDto).Name, id);
-            var existing = service.Get(id);
-            if (existing is null)
-            {
-                logger.LogWarning("Элемент типа {DtoType} с Id {Id} не найден", typeof(TDto).Name, id);
-                return NotFound();
-            }
-            var result = service.Delete(id);
-            if (!result)
-            {
-                logger.LogWarning("Элемент типа {DtoType} с Id {Id} не может быть удалён", typeof(TDto).Name, id);
-                return Conflict();
-            }
+
+            service.Delete(id);
+
             logger.LogInformation("Элемент типа {DtoType} с Id {Id} успешно удалён", typeof(TDto).Name, id);
             return NoContent();
         }

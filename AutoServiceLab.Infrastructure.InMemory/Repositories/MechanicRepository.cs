@@ -6,31 +6,33 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class MechanicRepository : IMechanicRepository
 {
-    /// <inheritdoc />
-    public Mechanic? Get(int id) => AutoServiceData.Mechanics.FirstOrDefault(m => m.Id == id);
+    private readonly List<Mechanic> _mechanics = AutoServiceData.Mechanics;
 
     /// <inheritdoc />
-    public IReadOnlyList<Mechanic> GetAll() => AutoServiceData.Mechanics;
+    public Mechanic? Get(int id) => _mechanics.FirstOrDefault(m => m.Id == id);
+
+    /// <inheritdoc />
+    public IReadOnlyList<Mechanic> GetAll() => _mechanics;
 
     /// <inheritdoc />
     public void Add(Mechanic entity)
     {
-        entity.Id = AutoServiceData.Mechanics.Count == 0 ? 1 : AutoServiceData.Mechanics.Max(m => m.Id) + 1;
-        AutoServiceData.Mechanics.Add(entity);
+        entity.Id = _mechanics.Count == 0 ? 1 : _mechanics.Max(m => m.Id) + 1;
+        _mechanics.Add(entity);
     }
 
     /// <inheritdoc />
     public void Update(Mechanic entity)
     {
-        var index = AutoServiceData.Mechanics.FindIndex(m => m.Id == entity.Id);
+        var index = _mechanics.FindIndex(m => m.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException();
-        AutoServiceData.Mechanics[index] = entity;
+        _mechanics[index] = entity;
     }
 
     /// <inheritdoc />
     public bool Delete(int id)
     {
         var m = Get(id);
-        return m != null && AutoServiceData.Mechanics.Remove(m);
+        return m != null && _mechanics.Remove(m);
     }
 }

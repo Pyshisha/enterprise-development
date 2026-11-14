@@ -1,9 +1,9 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Clients;
-using AutoServiceLab.Application.Contracts.DTOs.Mechanics;
-using AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
-using AutoServiceLab.Domain.Enums;
 using AutoServiceLab.Domain.Repositories;
+using AutoServiceLab.Shared.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace AutoServiceLab.Application.Services;
@@ -13,7 +13,6 @@ namespace AutoServiceLab.Application.Services;
 /// </summary>
 public class AnalyticsService(
     IMechanicRepository mechanicRepository,
-    IClientRepository clientRepository,
     IWorkTypeRepository workTypeRepository,
     IServiceOrderRepository orderRepository,
     IOrderWorkRepository orderWorkRepository,
@@ -38,23 +37,14 @@ public class AnalyticsService(
     {
         logger.LogInformation("Получение клиентов, обслуживавшихся у механика {Id}", mechanicId);
 
-        var orderIds = orderMechanicRepository.GetAll()
-            .Where(om => om.MechanicId == mechanicId)
-            .Select(om => om.ServiceOrderId)
-            .Distinct()
-            .ToList();
-
-        var clientIds = orderRepository.GetAll()
-            .Where(o => orderIds.Contains(o.Id))
-            .Select(o => o.ClientId)
-            .Distinct()
-            .ToList();
-
-        var result = clientRepository.GetAll()
-            .Where(c => clientIds.Contains(c.Id))
-            .OrderBy(c => c.FullName)
-            .Select(c => new ClientDto(c.Id, c.FullName, c.Phone))
-            .ToList();
+        var result = orderMechanicRepository.GetAll()
+        .Where(om => om.MechanicId == mechanicId)
+        .Select(om => om.ServiceOrder)
+        .Select(order => order.Client)
+        .Distinct()
+        .OrderBy(c => c.FullName)
+        .Select(c => new ClientDto(c.Id, c.FullName, c.Phone))
+        .ToList();
 
         return result;
     }
@@ -91,15 +81,19 @@ public class AnalyticsService(
     {
         logger.LogInformation("Получение топ 5 видов работ");
 
-        var topWorkTypeIds = orderWorkRepository.GetAll()
+        var topWorkTypeIdsWithIndex = orderWorkRepository.GetAll()
             .GroupBy(ow => ow.WorkTypeId)
             .OrderByDescending(g => g.Count())
             .Take(5)
-            .Select(g => g.Key)
+            .Select((g, index) => new { Id = g.Key, Position = index })
             .ToList();
 
+        var topIds = topWorkTypeIdsWithIndex.Select(x => x.Id).ToList();
+
         var result = workTypeRepository.GetAll()
-            .Where(w => topWorkTypeIds.Contains(w.Id))
+            .Where(w => topIds.Contains(w.Id))
+            .AsEnumerable()
+            .OrderBy(w => topWorkTypeIdsWithIndex.First(x => x.Id == w.Id).Position)
             .Select(w => new WorkTypeDto(w.Id, w.Name, w.Category, w.Duration, w.LaborCost))
             .ToList();
 

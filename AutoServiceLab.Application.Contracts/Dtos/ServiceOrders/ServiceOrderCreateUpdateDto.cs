@@ -1,4 +1,4 @@
-﻿namespace AutoServiceLab.Application.Contracts.DTOs.ServiceOrders;
+﻿namespace AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
 
 /// <summary>
 /// DTO для создания или обновления заказа

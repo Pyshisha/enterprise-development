@@ -1,4 +1,4 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Cars;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Cars;
 using AutoServiceLab.Application.Contracts.Interfaces;
 using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
@@ -42,7 +42,7 @@ public class CarService(
             Model = dto.Model,
             Year = dto.Year,
             ClientId = dto.ClientId,
-            Client = clientRepo.Get(dto.ClientId) ?? throw new Exception("Клиент не найден")
+            Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден")
         };
         repository.Add(car);
         return new CarDto(car.Id, car.LicensePlate, car.Brand, car.Model, car.Year, car.ClientId);
@@ -58,7 +58,7 @@ public class CarService(
         car.Model = dto.Model;
         car.Year = dto.Year;
         car.ClientId = dto.ClientId;
-        car.Client = clientRepo.Get(dto.ClientId) ?? throw new Exception("Клиент не найден");
+        car.Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден");
         repository.Update(car);
         return new CarDto(car.Id, car.LicensePlate, car.Brand, car.Model, car.Year, car.ClientId);
     }

@@ -1,5 +1,6 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Mechanics;
-using AutoServiceLab.Application.Contracts.DTOs.ServiceOrders;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
+using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
 using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
@@ -82,7 +83,11 @@ public class MechanicService(
 
         return orderRepository.GetAll()
             .Where(o => orderIds.Contains(o.Id))
-            .Select(o => new ServiceOrderDto(o.Id, o.ReceptionDate, o.IssueDate, o.ClientId, o.Client?.FullName ?? "", o.CarId, o.Car?.Model ?? ""))
+            .Select(o => new ServiceOrderDto(
+                o.Id, o.ReceptionDate, o.IssueDate, o.ClientId, o.Client?.FullName ?? "", o.CarId, o.Car?.Model ?? "",
+                new List<WorkTypeDto>(),
+                new List<MechanicDto>()
+            ))
             .ToList();
     }
 }

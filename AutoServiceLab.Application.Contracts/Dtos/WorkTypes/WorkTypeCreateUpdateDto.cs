@@ -1,17 +1,15 @@
-﻿using AutoServiceLab.Domain.Enums;
+﻿using AutoServiceLab.Shared.Enums;
 
-namespace AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
+namespace AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 
 /// <summary>
-/// DTO для вида работ
+/// DTO для создания или обновления вида работ
 /// </summary>
-/// <param name="Id">Идентификатор вида работ</param>
 /// <param name="Name">Название работы</param>
 /// <param name="Category">Категория работы</param>
 /// <param name="Duration">Продолжительность (часы)</param>
 /// <param name="LaborCost">Стоимость работы</param>
-public record WorkTypeDto(
-    int Id,
+public record WorkTypeCreateUpdateDto(
     string Name,
     WorkCategory Category,
     decimal Duration,

@@ -1,4 +1,6 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.ServiceOrders;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
+using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
 using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
@@ -14,15 +16,14 @@ public class ServiceOrderService(
     IClientRepository clientRepo,
     ICarRepository carRepo,
     IOrderWorkRepository orderWorkRepo,
+    IOrderMechanicRepository orderMechanicRepo,
     ILogger<ServiceOrderService> logger) : IServiceOrderService
 {
     /// <inheritdoc />
     public IList<ServiceOrderDto> GetAll()
     {
         logger.LogInformation("Получение списка всех заказов");
-        return repository.GetAll()
-            .Select(o => new ServiceOrderDto(o.Id, o.ReceptionDate, o.IssueDate, o.ClientId, o.Client?.FullName ?? "", o.CarId, o.Car?.Model ?? ""))
-            .ToList();
+        return repository.GetAll().Select(MapToDto).ToList();
     }
 
     /// <inheritdoc />
@@ -30,7 +31,7 @@ public class ServiceOrderService(
     {
         logger.LogInformation("Получение заказа с ID: {Id}", id);
         var o = repository.Get(id);
-        return o == null ? null : new ServiceOrderDto(o.Id, o.ReceptionDate, o.IssueDate, o.ClientId, o.Client?.FullName ?? "", o.CarId, o.Car?.Model ?? "");
+        return o == null ? null : MapToDto(o);
     }
 
     /// <inheritdoc />
@@ -42,12 +43,12 @@ public class ServiceOrderService(
             ReceptionDate = DateTime.Now,
             IssueDate = dto.IssueDate,
             ClientId = dto.ClientId,
-            Client = clientRepo.Get(dto.ClientId) ?? throw new Exception("Клиент не найден"),
+            Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден"),
             CarId = dto.CarId,
-            Car = carRepo.Get(dto.CarId) ?? throw new Exception("Машина не найдена")
+            Car = carRepo.Get(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена")
         };
         repository.Add(order);
-        return new ServiceOrderDto(order.Id, order.ReceptionDate, order.IssueDate, order.ClientId, order.Client.FullName, order.CarId, order.Car.Model);
+        return MapToDto(order);
     }
 
     /// <inheritdoc />
@@ -57,11 +58,11 @@ public class ServiceOrderService(
         var order = repository.Get(id) ?? throw new KeyNotFoundException();
         order.IssueDate = dto.IssueDate;
         order.ClientId = dto.ClientId;
-        order.Client = clientRepo.Get(dto.ClientId) ?? throw new Exception("Клиент не найден");
+        order.Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден");
         order.CarId = dto.CarId;
-        order.Car = carRepo.Get(dto.CarId) ?? throw new Exception("Машина не найдена");
+        order.Car = carRepo.Get(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена");
         repository.Update(order);
-        return new ServiceOrderDto(order.Id, order.ReceptionDate, order.IssueDate, order.ClientId, order.Client.FullName, order.CarId, order.Car.Model);
+        return MapToDto(order);
     }
 
     /// <inheritdoc />
@@ -79,5 +80,33 @@ public class ServiceOrderService(
             .Where(ow => ow.ServiceOrderId == orderId)
             .Select(ow => ow.WorkType?.Name ?? "Неизвестно")
             .ToList();
+    }
+
+    /// <summary>
+    /// Вспомогательный метод для преобразования сущности в DTO
+    /// </summary>
+    private ServiceOrderDto MapToDto(ServiceOrder o)
+    {
+        var works = orderWorkRepo.GetAll()
+            .Where(ow => ow.ServiceOrderId == o.Id)
+            .Select(ow => new WorkTypeDto(ow.WorkType.Id, ow.WorkType.Name, ow.WorkType.Category, ow.WorkType.Duration, ow.WorkType.LaborCost))
+            .ToList();
+
+        var mechanics = orderMechanicRepo.GetAll()
+            .Where(om => om.ServiceOrderId == o.Id)
+            .Select(om => new MechanicDto(om.Mechanic.Id, om.Mechanic.FullName, om.Mechanic.Specialization, om.Mechanic.ExperienceYears))
+            .ToList();
+
+        return new ServiceOrderDto(
+            o.Id,
+            o.ReceptionDate,
+            o.IssueDate,
+            o.ClientId,
+            o.Client?.FullName ?? "",
+            o.CarId,
+            o.Car?.Model ?? "",
+            works,
+            mechanics
+        );
     }
 }

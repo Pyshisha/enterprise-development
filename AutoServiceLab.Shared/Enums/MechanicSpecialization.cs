@@ -1,4 +1,4 @@
-﻿namespace AutoServiceLab.Domain.Enums;
+﻿namespace AutoServiceLab.Shared.Enums;
 
 /// <summary>
 /// Специализации механиков

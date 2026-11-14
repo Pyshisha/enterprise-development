@@ -1,7 +1,7 @@
-﻿using AutoServiceLab.Application.Contracts.DTOs.Clients;
-using AutoServiceLab.Application.Contracts.DTOs.Mechanics;
-using AutoServiceLab.Application.Contracts.DTOs.WorkTypes;
-using AutoServiceLab.Domain.Enums;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
+using AutoServiceLab.Shared.Enums;
 
 namespace AutoServiceLab.Application.Contracts.Interfaces;
 

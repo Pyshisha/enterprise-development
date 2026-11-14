@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoServiceLab.Application.Contracts\AutoServiceLab.Application.Contracts.csproj" />
     <ProjectReference Include="..\AutoServiceLab.Domain\AutoServiceLab.Domain.csproj" />
+    <ProjectReference Include="..\AutoServiceLab.Shared\AutoServiceLab.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
