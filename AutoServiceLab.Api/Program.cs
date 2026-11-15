@@ -1,16 +1,29 @@
 using AutoServiceLab.Application.Contracts.Interfaces;
 using AutoServiceLab.Application.Services;
 using AutoServiceLab.Domain.Repositories;
-using AutoServiceLab.Infrastructure.InMemory.Repositories;
+using AutoServiceLab.Infrastructure.EfCore;
+using AutoServiceLab.Infrastructure.EfCore.Repositories;
+using AutoServiceLab.ServiceDefaults;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IClientRepository, ClientRepository>();
-builder.Services.AddSingleton<ICarRepository, CarRepository>();
-builder.Services.AddSingleton<IMechanicRepository, MechanicRepository>();
-builder.Services.AddSingleton<IWorkTypeRepository, WorkTypeRepository>();
-builder.Services.AddSingleton<IServiceOrderRepository, ServiceOrderRepository>();
+builder.AddServiceDefaults();
+
+builder.AddNpgsqlDbContext<AutoServiceDbContext>("Postgres", configureDbContextOptions: options =>
+{
+    options.UseNpgsql(npgsqlOptions =>
+        npgsqlOptions.MigrationsAssembly("AutoServiceLab.Infrastructure.EfCore"));
+});
+
+builder.Services.AddScoped<IClientRepository, ClientEfCoreRepository>();
+builder.Services.AddScoped<ICarRepository, CarEfCoreRepository>();
+builder.Services.AddScoped<IMechanicRepository, MechanicEfCoreRepository>();
+builder.Services.AddScoped<IWorkTypeRepository, WorkTypeEfCoreRepository>();
+builder.Services.AddScoped<IServiceOrderRepository, ServiceOrderEfCoreRepository>();
+builder.Services.AddScoped<IOrderWorkRepository, OrderWorkEfCoreRepository>();
+builder.Services.AddScoped<IOrderMechanicRepository, OrderMechanicEfCoreRepository>();
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ICarService, CarService>();
@@ -18,8 +31,6 @@ builder.Services.AddScoped<IMechanicService, MechanicService>();
 builder.Services.AddScoped<IWorkTypeService, WorkTypeService>();
 builder.Services.AddScoped<IServiceOrderService, ServiceOrderService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
-builder.Services.AddSingleton<IOrderWorkRepository, OrderWorkRepository>();
-builder.Services.AddSingleton<IOrderMechanicRepository, OrderMechanicRepository>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -45,7 +56,14 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+
+    using var scope = app.Services.CreateScope();
+
+    var context = scope.ServiceProvider.GetRequiredService<AutoServiceDbContext>();
+    context.Database.Migrate();
 }
+
+app.MapDefaultEndpoints();
 
 //app.UseHttpsRedirection();
 app.UseAuthorization();

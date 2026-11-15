@@ -1,18 +1,25 @@
-﻿namespace AutoServiceLab.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AutoServiceLab.Domain.Entities;
 
 /// <summary>
 /// Клиент автосервиса
 /// </summary>
+[Table("clients")]
 public class Client
 {
     /// <summary>
     /// Идентификатор клиента
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; }
 
     /// <summary>
     /// ФИО клиента
     /// </summary>
+    [Column("full_name")]
     public required string FullName { get; set; }
 
     /// <summary>
@@ -23,6 +30,7 @@ public class Client
     /// <summary>
     /// Номер телефона клиента
     /// </summary>
+    [Column("phone")]
     public required string Phone { get; set; }
 
     /// <summary>

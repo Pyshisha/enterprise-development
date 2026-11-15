@@ -448,8 +448,8 @@ public static class DataSeeder
             new()
             {
                 Id = 1,
-                ReceptionDate = new DateTime(2026, 9, 1),
-                IssueDate = new DateTime(2026, 9, 3),
+                ReceptionDate = new DateTime(2026, 9, 1, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 3, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[0].Id,
                 Client = clients[0],
                 CarId = cars[0].Id,
@@ -459,8 +459,8 @@ public static class DataSeeder
             new()
             {
                 Id = 2,
-                ReceptionDate = new DateTime(2026, 9, 5),
-                IssueDate = new DateTime(2026, 9, 7),
+                ReceptionDate = new DateTime(2026, 9, 5, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 7, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[1].Id,
                 Client = clients[1],
                 CarId = cars[1].Id,
@@ -470,7 +470,7 @@ public static class DataSeeder
             new()
             {
                 Id = 3,
-                ReceptionDate = new DateTime(2026, 9, 8),
+                ReceptionDate = new DateTime(2026, 9, 8, 0, 0, 0, DateTimeKind.Utc),
                 IssueDate = null,
                 ClientId = clients[1].Id,
                 Client = clients[1],
@@ -481,8 +481,8 @@ public static class DataSeeder
             new()
             {
                 Id = 4,
-                ReceptionDate = new DateTime(2026, 9, 10),
-                IssueDate = new DateTime(2026, 9, 12),
+                ReceptionDate = new DateTime(2026, 9, 10, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 12, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[2].Id,
                 Client = clients[2],
                 CarId = cars[3].Id,
@@ -492,8 +492,8 @@ public static class DataSeeder
             new()
             {
                 Id = 5,
-                ReceptionDate = new DateTime(2026, 9, 12),
-                IssueDate = new DateTime(2026, 9, 15),
+                ReceptionDate = new DateTime(2026, 9, 12, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 15, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[3].Id,
                 Client = clients[3],
                 CarId = cars[4].Id,
@@ -503,7 +503,7 @@ public static class DataSeeder
             new()
             {
                 Id = 6,
-                ReceptionDate = new DateTime(2026, 9, 15),
+                ReceptionDate = new DateTime(2026, 9, 15, 0, 0, 0, DateTimeKind.Utc),
                 IssueDate = null,
                 ClientId = clients[3].Id,
                 Client = clients[3],
@@ -514,8 +514,8 @@ public static class DataSeeder
             new()
             {
                 Id = 7,
-                ReceptionDate = new DateTime(2026, 9, 18),
-                IssueDate = new DateTime(2026, 9, 20),
+                ReceptionDate = new DateTime(2026, 9, 18, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 20, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[4].Id,
                 Client = clients[4],
                 CarId = cars[5].Id,
@@ -525,8 +525,8 @@ public static class DataSeeder
             new()
             {
                 Id = 8,
-                ReceptionDate = new DateTime(2026, 9, 20),
-                IssueDate = new DateTime(2026, 9, 23),
+                ReceptionDate = new DateTime(2026, 9, 20, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 23, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[5].Id,
                 Client = clients[5],
                 CarId = cars[6].Id,
@@ -536,8 +536,8 @@ public static class DataSeeder
             new()
             {
                 Id = 9,
-                ReceptionDate = new DateTime(2026, 9, 21),
-                IssueDate = new DateTime(2026, 9, 22),
+                ReceptionDate = new DateTime(2026, 9, 21, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 22, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[6].Id,
                 Client = clients[6],
                 CarId = cars[7].Id,
@@ -547,7 +547,7 @@ public static class DataSeeder
             new()
             {
                 Id = 10,
-                ReceptionDate = new DateTime(2026, 9, 22),
+                ReceptionDate = new DateTime(2026, 9, 22, 0, 0, 0, DateTimeKind.Utc),
                 IssueDate = null,
                 ClientId = clients[7].Id,
                 Client = clients[7],
@@ -558,8 +558,8 @@ public static class DataSeeder
             new()
             {
                 Id = 11,
-                ReceptionDate = new DateTime(2026, 9, 25),
-                IssueDate = new DateTime(2026, 9, 27),
+                ReceptionDate = new DateTime(2026, 9, 25, 0, 0, 0, DateTimeKind.Utc),
+                IssueDate = new DateTime(2026, 9, 27, 0, 0, 0, DateTimeKind.Utc),
                 ClientId = clients[8].Id,
                 Client = clients[8],
                 CarId = cars[9].Id,
@@ -569,7 +569,7 @@ public static class DataSeeder
             new()
             {
                 Id = 12,
-                ReceptionDate = new DateTime(2026, 9, 26),
+                ReceptionDate = new DateTime(2026, 9, 26, 0, 0, 0, DateTimeKind.Utc),
                 IssueDate = null,
                 ClientId = clients[9].Id,
                 Client = clients[9],

@@ -1,33 +1,43 @@
-﻿namespace AutoServiceLab.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AutoServiceLab.Domain.Entities;
 
 /// <summary>
 /// Заказ на обслуживание автомобиля
 /// </summary>
+[Table("service_orders")]
 public class ServiceOrder
 {
     /// <summary>
     /// Идентификатор заказа
     /// </summary>
+    [Key]
+    [Column("id")]
     public int Id { get; set; }
 
     /// <summary>
     /// Дата приема автомобиля
     /// </summary>
+    [Column("reception_date")]
     public DateTime ReceptionDate { get; set; } = DateTime.Now;
 
     /// <summary>
     /// Дата выдачи автомобиля
     /// </summary>
+    [Column("issue_date")]
     public DateTime? IssueDate { get; set; }
 
     /// <summary>
     /// Стоимость
     /// </summary>
+    [NotMapped]
     public decimal LaborCost => OrderWorks.Sum(ow => ow.WorkType.LaborCost);
 
     /// <summary>
     /// Идентификатор клиента
     /// </summary>
+    [Column("client_id")]
     public int ClientId { get; set; }
 
     /// <summary>
@@ -38,6 +48,7 @@ public class ServiceOrder
     /// <summary>
     /// Идентификатор автомобиля
     /// </summary>
+    [Column("car_id")]
     public int CarId { get; set; }
 
     /// <summary>
