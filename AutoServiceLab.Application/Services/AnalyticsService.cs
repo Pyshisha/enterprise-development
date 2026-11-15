@@ -37,6 +37,11 @@ public class AnalyticsService(
     {
         logger.LogInformation("Получение клиентов, обслуживавшихся у механика {Id}", mechanicId);
 
+        if (mechanicRepository.Get(mechanicId) == null)
+        {
+            throw new KeyNotFoundException($"Механик с Id {mechanicId} не найден");
+        }
+
         var result = orderMechanicRepository.GetAll()
         .Where(om => om.MechanicId == mechanicId)
         .Select(om => om.ServiceOrder)
@@ -68,6 +73,11 @@ public class AnalyticsService(
     public decimal GetOrderTotalCost(int orderId)
     {
         logger.LogInformation("Подсчёт стоимости заказа {Id}", orderId);
+
+        if (orderRepository.Get(orderId) == null)
+        {
+            throw new KeyNotFoundException($"Заказ с Id {orderId} не найден");
+        }
 
         var cost = orderWorkRepository.GetAll()
             .Where(ow => ow.ServiceOrderId == orderId)

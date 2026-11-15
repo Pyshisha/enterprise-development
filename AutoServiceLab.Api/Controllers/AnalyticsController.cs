@@ -39,6 +39,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// </summary>
     [HttpGet("clients-by-mechanic/{id}")]
     [ProducesResponseType(typeof(IList<ClientDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)] 
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClientsByMechanic(int id)
     {
@@ -46,6 +47,11 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
         {
             logger.LogInformation("Запрос аналитики: клиенты механика {Id}", id);
             return Ok(service.GetClientsByMechanic(id));
+        }
+        catch (KeyNotFoundException ex) 
+        {
+            logger.LogWarning(ex, "Механик с ID {Id} не найден", id);
+            return NotFound(new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -79,6 +85,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// </summary>
     [HttpGet("order-cost/{id}")]
     [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetOrderCost(int id)
     {
@@ -86,6 +93,11 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
         {
             logger.LogInformation("Запрос аналитики: стоимость заказа {Id}", id);
             return Ok(service.GetOrderTotalCost(id));
+        }
+        catch (KeyNotFoundException ex)
+        {
+            logger.LogWarning(ex, "Заказ с ID {Id} не найден", id);
+            return NotFound(new { message = ex.Message });
         }
         catch (Exception ex)
         {
