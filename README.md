@@ -13,6 +13,8 @@
 - **ASP.NET Core Web API**
 - **xUnit v3** 
 - **Scalar** 
+- **Entity Framework Core**
+- **.NET Aspire**
 
 ## Архитектура проекта
 - **Domain** — Сущности (Entities), перечисления (Enums) и интерфейсы репозиториев
@@ -20,7 +22,10 @@
 - **Application** — Бизнес-логика (сервисы, аналитика)
 - **Infrastructure.InMemory** — Реализация репозиториев для хранения данных в памяти
 - **Api** — Контроллеры и настройка приложения
-- **Tests** — Юнит-тесты
+- **Tests** - Юнит-тесты
+- **Infrastructure.EfCore** — Реализация репозиториев и DbContext для работы с PostgreSQL
+- **AppHost** — Настройка .NET Aspire для запуска БД и API
+- **ServiceDefaults** — Общие настройки телеметрии и health-checks
 
 ## Лабораторная работа №1: Классы
 Реализована объектная модель (клиенты, машины, механики, заказы, виды работ). 
@@ -35,12 +40,20 @@
 - Настроена документация с помощью Scalar.
 - Внедрено логирование через `ILogger`.
 
+## Лабораторная работа №3: ORM
+Хранение данных переведено с In-Memory на PostgreSQL.
+- Создан `AutoServiceDbContext` и настроены связи между сущностями.
+- Добавлены миграции и Data Seeding (`HasData`).
+- Настроен **.NET Aspire** (`AppHost`) для автоматического запуска PostgreSQL в Docker и API.
+- Репозитории переписаны на Entity Framework Core.
+
 ## Запуск проекта
 
-### 1. Запуск API
-```bash
-dotnet run --project AutoServiceLab.Api
-```
+### 1. Запуск через Aspire 
+Убедитесь, что у вас установлен **Docker Desktop**.
+Запустите проект `AutoServiceLab.AppHost`. 
+Aspire автоматически поднимет базу данных PostgreSQL и API.
+После запуска откроется Aspire Dashboard, откуда можно перейти в Scalar.
 
 ### 2. Запуск тестов
 ```bash
@@ -50,4 +63,3 @@ dotnet test
 ## Результаты тестов
 
 ![Скриншот успешного прохождения тестов](docs/test.png)
-
