@@ -19,11 +19,11 @@ public class AnalyticsService(
     ILogger<AnalyticsService> logger) : IAnalyticsService
 {
     /// <inheritdoc />
-    public IList<MechanicDto> GetMechanicsByWorkCategory(MechanicSpecialization category)
+    public async Task<IList<MechanicDto>> GetMechanicsByWorkCategory(MechanicSpecialization category)
     {
         logger.LogInformation("Получение механиков по категории работ: {Category}", category);
 
-        var result = mechanicRepository.GetAll()
+        var result = (await mechanicRepository.GetAllAsync())
             .Where(m => m.Specialization == category)
             .Select(m => new MechanicDto(m.Id, m.FullName, m.Specialization, m.ExperienceYears))
             .ToList();
@@ -32,16 +32,16 @@ public class AnalyticsService(
     }
 
     /// <inheritdoc />
-    public IList<ClientDto> GetClientsByMechanic(int mechanicId)
+    public async Task<IList<ClientDto>> GetClientsByMechanic(int mechanicId)
     {
         logger.LogInformation("Получение клиентов, обслуживавшихся у механика {Id}", mechanicId);
 
-        if (mechanicRepository.Get(mechanicId) == null)
+        if (await mechanicRepository.GetAsync(mechanicId) == null)
         {
             throw new KeyNotFoundException($"Механик с Id {mechanicId} не найден");
         }
 
-        var result = orderMechanicRepository.GetAll()
+        var result = (await orderMechanicRepository.GetAllAsync())
         .Where(om => om.MechanicId == mechanicId)
         .Select(om => om.ServiceOrder)
         .Select(order => order.Client)
@@ -54,13 +54,13 @@ public class AnalyticsService(
     }
 
     /// <inheritdoc />
-    public int GetRepeatClientsCount()
+    public async Task<int> GetRepeatClientsCount()
     {
         logger.LogInformation("Подсчёт повторных обращений за последний месяц");
 
         var monthAgo = DateTime.Now.AddMonths(-1);
 
-        var count = orderRepository.GetAll()
+        var count = (await orderRepository.GetAllAsync())
             .Where(o => o.ReceptionDate >= monthAgo)
             .GroupBy(o => o.ClientId)
             .Count(g => g.Count() > 1);
@@ -69,16 +69,16 @@ public class AnalyticsService(
     }
 
     /// <inheritdoc />
-    public decimal GetOrderTotalCost(int orderId)
+    public async Task<decimal> GetOrderTotalCost(int orderId)
     {
         logger.LogInformation("Подсчёт стоимости заказа {Id}", orderId);
 
-        if (orderRepository.Get(orderId) == null)
+        if (await orderRepository.GetAsync(orderId) == null)
         {
             throw new KeyNotFoundException($"Заказ с Id {orderId} не найден");
         }
 
-        var cost = orderWorkRepository.GetAll()
+        var cost = (await orderWorkRepository.GetAllAsync())
             .Where(ow => ow.ServiceOrderId == orderId)
             .Sum(ow => ow.WorkType?.LaborCost ?? 0);
 
@@ -86,11 +86,11 @@ public class AnalyticsService(
     }
 
     /// <inheritdoc />
-    public IList<WorkTypeDto> GetTopFiveWorkTypes()
+    public async Task<IList<WorkTypeDto>> GetTopFiveWorkTypes()
     {
         logger.LogInformation("Получение топ 5 видов работ");
 
-        var result = orderWorkRepository.GetAll()
+        var result = (await orderWorkRepository.GetAllAsync())
         .GroupBy(ow => ow.WorkType)
         .OrderByDescending(g => g.Count())
         .Take(5)

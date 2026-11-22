@@ -20,24 +20,24 @@ public class MechanicService(
     ILogger<MechanicService> logger) : IMechanicService
 {
     /// <inheritdoc />
-    public IList<MechanicDto> GetAll()
+    public async Task<IList<MechanicDto>> GetAllAsync()
     {
         logger.LogInformation("Получение списка всех механиков");
-        return repository.GetAll()
+        return (await repository.GetAllAsync())
             .Select(m => new MechanicDto(m.Id, m.FullName, m.Specialization, m.ExperienceYears))
             .ToList();
     }
 
     /// <inheritdoc />
-    public MechanicDto? Get(int id)
+    public async Task<MechanicDto?> GetAsync(int id)
     {
         logger.LogInformation("Получение механика с ID: {Id}", id);
-        var m = repository.Get(id);
+        var m = await repository.GetAsync(id);
         return m == null ? null : new MechanicDto(m.Id, m.FullName, m.Specialization, m.ExperienceYears);
     }
 
     /// <inheritdoc />
-    public MechanicDto Create(MechanicCreateUpdateDto dto)
+    public async Task<MechanicDto> CreateAsync(MechanicCreateUpdateDto dto)
     {
         logger.LogInformation("Создание механика: {FullName}", dto.FullName);
         var mechanic = new Mechanic
@@ -48,43 +48,40 @@ public class MechanicService(
             Specialization = dto.Specialization,
             ExperienceYears = dto.ExperienceYears
         };
-        repository.Add(mechanic);
+        await repository.AddAsync(mechanic);
         return new MechanicDto(mechanic.Id, mechanic.FullName, mechanic.Specialization, mechanic.ExperienceYears);
     }
 
     /// <inheritdoc />
-    public MechanicDto Update(MechanicCreateUpdateDto dto, int id)
+    public async Task<MechanicDto> UpdateAsync(MechanicCreateUpdateDto dto, int id)
     {
         logger.LogInformation("Обновление механика с ID: {Id}", id);
-        var m = repository.Get(id) ?? throw new KeyNotFoundException();
+        var m = await repository.GetAsync(id) ?? throw new KeyNotFoundException();
         m.FullName = dto.FullName;
         m.PassportNumber = dto.PassportNumber;
         m.Phone = dto.Phone;
         m.Specialization = dto.Specialization;
         m.ExperienceYears = dto.ExperienceYears;
-        repository.Update(m);
+        await repository.UpdateAsync(m);
         return new MechanicDto(m.Id, m.FullName, m.Specialization, m.ExperienceYears);
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         logger.LogInformation("Удаление механика с ID: {Id}", id);
-        return repository.Delete(id);
+        return await repository.DeleteAsync(id);
     }
 
     /// <inheritdoc />
-    public IList<ServiceOrderDto> GetOrdersByMechanic(int mechanicId)
+    public async Task<IList<ServiceOrderDto>> GetOrdersByMechanic(int mechanicId)
     {
         logger.LogInformation("Получение заказов механика с ID: {MechanicId}", mechanicId);
-        var orderIds = orderMechanicRepository.GetAll()
-            .Where(om => om.MechanicId == mechanicId)
-            .Select(om => om.ServiceOrderId)
-            .Distinct()
-            .ToList();
 
-        return orderRepository.GetAll()
-            .Where(o => orderIds.Contains(o.Id))
+        return (await orderMechanicRepository.GetAllAsync())
+            .Where(om => om.MechanicId == mechanicId && om.ServiceOrder != null)
+            .Select(om => om.ServiceOrder!)
+            .Distinct()
             .Select(o => new ServiceOrderDto(
                 o.Id,
                 o.ReceptionDate,

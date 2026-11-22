@@ -15,24 +15,24 @@ public class CarService(
     ILogger<CarService> logger) : ICarService
 {
     /// <inheritdoc />
-    public IList<CarDto> GetAll()
+    public async Task<IList<CarDto>> GetAllAsync()
     {
         logger.LogInformation("Получение списка всех автомобилей");
-        return repository.GetAll()
+        return (await repository.GetAllAsync())
             .Select(c => new CarDto(c.Id, c.LicensePlate, c.Brand, c.Model, c.Year, c.ClientId))
             .ToList();
     }
 
     /// <inheritdoc />
-    public CarDto? Get(int id)
+    public async Task<CarDto?> GetAsync(int id)
     {
         logger.LogInformation("Получение автомобиля с ID: {Id}", id);
-        var car = repository.Get(id);
+        var car = await repository.GetAsync(id);
         return car == null ? null : new CarDto(car.Id, car.LicensePlate, car.Brand, car.Model, car.Year, car.ClientId);
     }
 
     /// <inheritdoc />
-    public CarDto Create(CarCreateUpdateDto dto)
+    public async Task<CarDto> CreateAsync(CarCreateUpdateDto dto)
     {
         logger.LogInformation("Создание автомобиля {Brand} {Model}", dto.Brand, dto.Model);
         var car = new Car
@@ -42,39 +42,39 @@ public class CarService(
             Model = dto.Model,
             Year = dto.Year,
             ClientId = dto.ClientId,
-            Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден")
+            Client = await clientRepo.GetAsync(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден")
         };
-        repository.Add(car);
+        await repository.AddAsync(car);
         return new CarDto(car.Id, car.LicensePlate, car.Brand, car.Model, car.Year, car.ClientId);
     }
 
     /// <inheritdoc />
-    public CarDto Update(CarCreateUpdateDto dto, int id)
+    public async Task<CarDto> UpdateAsync(CarCreateUpdateDto dto, int id)
     {
         logger.LogInformation("Обновление автомобиля с ID: {Id}", id);
-        var car = repository.Get(id) ?? throw new KeyNotFoundException();
+        var car = await repository.GetAsync(id) ?? throw new KeyNotFoundException();
         car.LicensePlate = dto.LicensePlate;
         car.Brand = dto.Brand;
         car.Model = dto.Model;
         car.Year = dto.Year;
         car.ClientId = dto.ClientId;
-        car.Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден");
-        repository.Update(car);
+        car.Client = await clientRepo.GetAsync(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден");
+        await repository.UpdateAsync(car);
         return new CarDto(car.Id, car.LicensePlate, car.Brand, car.Model, car.Year, car.ClientId);
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         logger.LogInformation("Удаление автомобиля с ID: {Id}", id);
-        return repository.Delete(id);
+        return await repository.DeleteAsync(id);
     }
 
     /// <inheritdoc />
-    public IList<CarDto> GetCarsByClientId(int clientId)
+    public async Task<IList<CarDto>> GetCarsByClientId(int clientId)
     {
         logger.LogInformation("Получение автомобилей клиента с ID: {ClientId}", clientId);
-        return repository.GetAll()
+        return (await repository.GetAllAsync())
             .Where(c => c.ClientId == clientId)
             .Select(c => new CarDto(c.Id, c.LicensePlate, c.Brand, c.Model, c.Year, c.ClientId))
             .ToList();

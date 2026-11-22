@@ -12,48 +12,48 @@ namespace AutoServiceLab.Application.Services;
 public class WorkTypeService(IWorkTypeRepository repository, ILogger<WorkTypeService> logger) : IWorkTypeService
 {
     /// <inheritdoc />
-    public IList<WorkTypeDto> GetAll()
+    public async Task<IList<WorkTypeDto>> GetAllAsync()
     {
         logger.LogInformation("Получение списка всех видов работ");
-        return repository.GetAll()
+        return (await repository.GetAllAsync())
             .Select(w => new WorkTypeDto(w.Id, w.Name, w.Category, w.Duration, w.LaborCost))
             .ToList();
     }
 
     /// <inheritdoc />
-    public WorkTypeDto? Get(int id)
+    public async Task<WorkTypeDto?> GetAsync(int id)
     {
         logger.LogInformation("Получение вида работ с ID: {Id}", id);
-        var w = repository.Get(id);
+        var w = await repository.GetAsync(id);
         return w == null ? null : new WorkTypeDto(w.Id, w.Name, w.Category, w.Duration, w.LaborCost);
     }
 
     /// <inheritdoc />
-    public WorkTypeDto Create(WorkTypeCreateUpdateDto dto)
+    public async Task<WorkTypeDto> CreateAsync(WorkTypeCreateUpdateDto dto)
     {
         logger.LogInformation("Создание вида работ: {Name}", dto.Name);
         var w = new WorkType { Name = dto.Name, Category = dto.Category, Duration = dto.Duration, LaborCost = dto.LaborCost };
-        repository.Add(w);
+        await repository.AddAsync(w);
         return new WorkTypeDto(w.Id, w.Name, w.Category, w.Duration, w.LaborCost);
     }
 
     /// <inheritdoc />
-    public WorkTypeDto Update(WorkTypeCreateUpdateDto dto, int id)
+    public async Task<WorkTypeDto> UpdateAsync(WorkTypeCreateUpdateDto dto, int id)
     {
         logger.LogInformation("Обновление вида работ с ID: {Id}", id);
-        var w = repository.Get(id) ?? throw new KeyNotFoundException();
+        var w = await repository.GetAsync(id) ?? throw new KeyNotFoundException();
         w.Name = dto.Name;
         w.Category = dto.Category;
         w.Duration = dto.Duration;
         w.LaborCost = dto.LaborCost;
-        repository.Update(w);
+        await repository.UpdateAsync(w);
         return new WorkTypeDto(w.Id, w.Name, w.Category, w.Duration, w.LaborCost);
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         logger.LogInformation("Удаление вида работ с ID: {Id}", id);
-        return repository.Delete(id);
+        return await repository.DeleteAsync(id);
     }
 }

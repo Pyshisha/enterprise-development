@@ -10,37 +10,39 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class OrderWorkEfCoreRepository(AutoServiceDbContext context) : IOrderWorkRepository
 {
     /// <inheritdoc />
-    public OrderWork? Get(int id) => context.OrderWorks
+    public async Task<OrderWork?> GetAsync(int id) => 
+        await context.OrderWorks
         .Include(ow => ow.WorkType)
-        .FirstOrDefault(ow => ow.Id == id);
+        .FirstOrDefaultAsync(ow => ow.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<OrderWork> GetAll() => context.OrderWorks
+    public async Task<IReadOnlyList<OrderWork>> GetAllAsync() =>
+        await context.OrderWorks
         .Include(ow => ow.WorkType)
-        .ToList();
+        .ToListAsync();
 
     /// <inheritdoc />
-    public void Add(OrderWork entity)
+    public async Task AddAsync(OrderWork entity)
     {
-        context.OrderWorks.Add(entity);
-        context.SaveChanges();
+        await context.OrderWorks.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(OrderWork entity)
+    public async Task UpdateAsync(OrderWork entity)
     {
         context.OrderWorks.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var entity = Get(id);
+        var entity = await GetAsync(id);
         if (entity == null) return false;
 
         context.OrderWorks.Remove(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }

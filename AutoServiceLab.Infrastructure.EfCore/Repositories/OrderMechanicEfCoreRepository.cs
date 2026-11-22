@@ -10,37 +10,39 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class OrderMechanicEfCoreRepository(AutoServiceDbContext context) : IOrderMechanicRepository
 {
     /// <inheritdoc />
-    public OrderMechanic? Get(int id) => context.OrderMechanics
+    public async Task<OrderMechanic?> GetAsync(int id) =>
+        await context.OrderMechanics
         .Include(om => om.Mechanic)
-        .FirstOrDefault(om => om.Id == id);
+        .FirstOrDefaultAsync(om => om.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<OrderMechanic> GetAll() => context.OrderMechanics
+    public async Task<IReadOnlyList<OrderMechanic>> GetAllAsync() => 
+        await context.OrderMechanics
         .Include(om => om.Mechanic)
-        .ToList();
+        .ToListAsync();
 
     /// <inheritdoc />
-    public void Add(OrderMechanic entity)
+    public async Task AddAsync(OrderMechanic entity)
     {
-        context.OrderMechanics.Add(entity);
-        context.SaveChanges();
+        await context.OrderMechanics.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(OrderMechanic entity)
+    public async Task UpdateAsync(OrderMechanic entity)
     {
         context.OrderMechanics.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var entity = Get(id);
+        var entity = await GetAsync(id);
         if (entity == null) return false;
 
         context.OrderMechanics.Remove(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }

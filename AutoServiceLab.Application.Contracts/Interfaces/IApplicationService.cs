@@ -11,25 +11,25 @@ public interface IApplicationService<TDto, TCreateUpdateDto, TKey>
     /// <summary>
     /// Создать запись
     /// </summary>
-    public TDto Create(TCreateUpdateDto dto);
+    public Task<TDto> CreateAsync(TCreateUpdateDto dto);
 
     /// <summary>
     /// Получить запись по идентификатору
     /// </summary>
-    public TDto? Get(TKey id);
+    public Task<TDto?> GetAsync(TKey id);
 
     /// <summary>
     /// Получить все записи
     /// </summary>
-    public IList<TDto> GetAll();
+    public Task<IList<TDto>> GetAllAsync();
 
     /// <summary>
     /// Обновить запись
     /// </summary>
-    public TDto Update(TCreateUpdateDto dto, TKey id);
+    public Task<TDto> UpdateAsync(TCreateUpdateDto dto, TKey id);
 
     /// <summary>
     /// Удалить запись
     /// </summary>
-    public bool Delete(TKey id);
+    public Task<bool> DeleteAsync(TKey id);
 }

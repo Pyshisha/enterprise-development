@@ -1,5 +1,6 @@
 ﻿using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 
@@ -9,33 +10,35 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class WorkTypeEfCoreRepository(AutoServiceDbContext context) : IWorkTypeRepository
 {
     /// <inheritdoc />
-    public WorkType? Get(int id) => context.WorkTypes.FirstOrDefault(w => w.Id == id);
+    public async Task<WorkType?> GetAsync(int id) =>
+        await context.WorkTypes.FirstOrDefaultAsync(w => w.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<WorkType> GetAll() => context.WorkTypes.ToList();
+    public async Task<IReadOnlyList<WorkType>> GetAllAsync() =>
+        await context.WorkTypes.ToListAsync();
 
     /// <inheritdoc />
-    public void Add(WorkType entity)
+    public async Task AddAsync(WorkType entity)
     {
-        context.WorkTypes.Add(entity);
-        context.SaveChanges();
+        await context.WorkTypes.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(WorkType entity)
+    public async Task UpdateAsync(WorkType entity)
     {
         context.WorkTypes.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var workType = Get(id);
+        var workType = await GetAsync(id);
         if (workType == null) return false;
 
         context.WorkTypes.Remove(workType);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }

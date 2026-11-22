@@ -19,19 +19,19 @@ public class ClientService(
     ILogger<ClientService> logger) : IClientService
 {
     /// <inheritdoc />
-    public IList<ClientDto> GetAll()
+    public async Task<IList<ClientDto>> GetAllAsync()
     {
         logger.LogInformation("Получение списка всех клиентов");
-        return repository.GetAll()
+        return (await repository.GetAllAsync())
             .Select(c => new ClientDto(c.Id, c.FullName, c.Phone))
             .ToList();
     }
 
     /// <inheritdoc />
-    public ClientDto? Get(int id)
+    public async Task<ClientDto?> GetAsync(int id)
     {
         logger.LogInformation("Получение клиента с ID: {Id}", id);
-        var client = repository.Get(id);
+        var client = await repository.GetAsync(id);
         if (client == null)
         {
             logger.LogWarning("Клиент с ID: {Id} не найден", id);
@@ -41,38 +41,38 @@ public class ClientService(
     }
 
     /// <inheritdoc />
-    public ClientDto Create(ClientCreateUpdateDto dto)
+    public async Task<ClientDto> CreateAsync(ClientCreateUpdateDto dto)
     {
         logger.LogInformation("Создание нового клиента: {FullName}", dto.FullName);
         var client = new Client { FullName = dto.FullName, Phone = dto.Phone };
-        repository.Add(client);
+        await repository.AddAsync(client);
         logger.LogInformation("Клиент успешно создан с ID: {Id}", client.Id);
         return new ClientDto(client.Id, client.FullName, client.Phone);
     }
 
     /// <inheritdoc />
-    public ClientDto Update(ClientCreateUpdateDto dto, int id)
+    public async Task<ClientDto> UpdateAsync(ClientCreateUpdateDto dto, int id)
     {
         logger.LogInformation("Обновление клиента с ID: {Id}", id);
-        var client = repository.Get(id) ?? throw new KeyNotFoundException($"Клиент {id} не найден");
+        var client = await repository.GetAsync(id) ?? throw new KeyNotFoundException($"Клиент {id} не найден");
         client.FullName = dto.FullName;
         client.Phone = dto.Phone;
-        repository.Update(client);
+        await repository.UpdateAsync(client);
         return new ClientDto(client.Id, client.FullName, client.Phone);
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         logger.LogInformation("Удаление клиента с ID: {Id}", id);
-        return repository.Delete(id);
+        return await repository.DeleteAsync(id);
     }
 
     /// <inheritdoc />
-    public IList<ServiceOrderDto> GetOrdersByClient(int clientId)
+    public async Task<IList<ServiceOrderDto>> GetOrdersByClient(int clientId)
     {
         logger.LogInformation("Получение заказов клиента с ID: {ClientId}", clientId);
-        return orderRepository.GetAll()
+        return (await orderRepository.GetAllAsync())
             .Where(o => o.ClientId == clientId)
             .Select(o => new ServiceOrderDto(
                 o.Id,

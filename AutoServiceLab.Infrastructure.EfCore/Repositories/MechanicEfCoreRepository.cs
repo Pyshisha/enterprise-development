@@ -1,5 +1,6 @@
 ﻿using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 
@@ -9,33 +10,35 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class MechanicEfCoreRepository(AutoServiceDbContext context) : IMechanicRepository
 {
     /// <inheritdoc />
-    public Mechanic? Get(int id) => context.Mechanics.FirstOrDefault(m => m.Id == id);
+    public async Task<Mechanic?> GetAsync(int id) => 
+        await context.Mechanics.FirstOrDefaultAsync(m => m.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<Mechanic> GetAll() => context.Mechanics.ToList();
+    public async Task<IReadOnlyList<Mechanic>> GetAllAsync() =>
+        await context.Mechanics.ToListAsync();
 
     /// <inheritdoc />
-    public void Add(Mechanic entity)
+    public async Task AddAsync(Mechanic entity)
     {
-        context.Mechanics.Add(entity);
-        context.SaveChanges();
+        await context.Mechanics.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(Mechanic entity)
+    public async Task UpdateAsync(Mechanic entity)
     {
         context.Mechanics.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var mechanic = Get(id);
+        var mechanic = await GetAsync(id);
         if (mechanic == null) return false;
 
         context.Mechanics.Remove(mechanic);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }

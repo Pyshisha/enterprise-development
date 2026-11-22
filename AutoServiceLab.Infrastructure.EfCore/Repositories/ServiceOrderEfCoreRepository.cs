@@ -10,39 +10,41 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class ServiceOrderEfCoreRepository(AutoServiceDbContext context) : IServiceOrderRepository
 {
     /// <inheritdoc />
-    public ServiceOrder? Get(int id) => context.ServiceOrders
+    public async Task<ServiceOrder?> GetAsync(int id) =>
+        await context.ServiceOrders
         .Include(o => o.Client)
         .Include(o => o.Car)
-        .FirstOrDefault(o => o.Id == id);
+        .FirstOrDefaultAsync(o => o.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<ServiceOrder> GetAll() => context.ServiceOrders
+    public async Task<IReadOnlyList<ServiceOrder>> GetAllAsync() =>
+        await context.ServiceOrders
         .Include(o => o.Client)
         .Include(o => o.Car)
-        .ToList();
+        .ToListAsync();
 
     /// <inheritdoc />
-    public void Add(ServiceOrder entity)
+    public async Task AddAsync(ServiceOrder entity)
     {
-        context.ServiceOrders.Add(entity);
-        context.SaveChanges();
+        await context.ServiceOrders.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(ServiceOrder entity)
+    public async Task UpdateAsync(ServiceOrder entity)
     {
         context.ServiceOrders.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var order = Get(id);
+        var order = await GetAsync(id);
         if (order == null) return false;
 
         context.ServiceOrders.Remove(order);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }

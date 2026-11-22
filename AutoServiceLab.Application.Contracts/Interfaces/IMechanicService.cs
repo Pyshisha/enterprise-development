@@ -8,5 +8,5 @@ public interface IMechanicService : IApplicationService<MechanicDto, MechanicCre
     /// <summary>
     /// Получить заказы, которые выполнял механик
     /// </summary>
-    public IList<ServiceOrderDto> GetOrdersByMechanic(int mechanicId);
+    public Task<IList<ServiceOrderDto>> GetOrdersByMechanic(int mechanicId);
 }

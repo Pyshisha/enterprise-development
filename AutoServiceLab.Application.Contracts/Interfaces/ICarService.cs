@@ -10,5 +10,5 @@ public interface ICarService : IApplicationService<CarDto, CarCreateUpdateDto, i
     /// <summary>
     /// Получить автомобили конкретного клиента
     /// </summary>
-    public IList<CarDto> GetCarsByClientId(int clientId);
+    public Task<IList<CarDto>> GetCarsByClientId(int clientId);
 }

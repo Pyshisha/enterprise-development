@@ -7,5 +7,5 @@ public interface IServiceOrderService : IApplicationService<ServiceOrderDto, Ser
     /// <summary>
     /// Получить работы конкретного заказа
     /// </summary>
-    public IList<string> GetWorksByOrder(int orderId);
+    public Task<IList<string>> GetWorksByOrder(int orderId);
 }

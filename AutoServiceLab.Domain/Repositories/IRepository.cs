@@ -10,25 +10,25 @@ public interface IRepository<T, in TId> where T : class
     /// <summary>
     /// Получить сущность по идентификатору
     /// </summary>
-    public T? Get(TId id);
+    public Task<T?> GetAsync(TId id);
 
     /// <summary>
     /// Получить все сущности
     /// </summary>
-    public IReadOnlyList<T> GetAll();
+    public Task<IReadOnlyList<T>> GetAllAsync();
 
     /// <summary>
     /// Добавить новую сущность
     /// </summary>
-    public void Add(T entity);
+    public Task AddAsync(T entity);
 
     /// <summary>
     /// Обновить существующую сущность
     /// </summary>
-    public void Update(T entity);
+    public Task UpdateAsync(T entity);
 
     /// <summary>
     /// Удалить сущность по идентификатору
     /// </summary>
-    public bool Delete(TId id);
+    public Task<bool> DeleteAsync(TId id);
 }

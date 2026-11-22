@@ -1,5 +1,6 @@
 ﻿using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 
@@ -9,33 +10,35 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class CarEfCoreRepository(AutoServiceDbContext context) : ICarRepository
 {
     /// <inheritdoc />
-    public Car? Get(int id) => context.Cars.FirstOrDefault(c => c.Id == id);
+    public async Task<Car?> GetAsync(int id) => 
+        await context.Cars.FirstOrDefaultAsync(c => c.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<Car> GetAll() => context.Cars.ToList();
+    public async Task<IReadOnlyList<Car>> GetAllAsync() => 
+        await context.Cars.ToListAsync();
 
     /// <inheritdoc />
-    public void Add(Car entity)
+    public async Task AddAsync(Car entity)
     {
-        context.Cars.Add(entity);
-        context.SaveChanges();
+        await context.Cars.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(Car entity)
+    public async Task UpdateAsync(Car entity)
     {
         context.Cars.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var car = Get(id);
+        var car = await GetAsync(id);
         if (car == null) return false;
 
         context.Cars.Remove(car);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }

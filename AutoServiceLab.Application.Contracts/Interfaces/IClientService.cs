@@ -8,5 +8,5 @@ public interface IClientService : IApplicationService<ClientDto, ClientCreateUpd
     /// <summary>
     /// Получить заказы конкретного клиента
     /// </summary>
-    public IList<ServiceOrderDto> GetOrdersByClient(int clientId);
+    public Task<IList<ServiceOrderDto>> GetOrdersByClient(int clientId);
 }

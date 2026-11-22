@@ -1,5 +1,6 @@
 ﻿using AutoServiceLab.Domain.Entities;
 using AutoServiceLab.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 
@@ -9,33 +10,35 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class ClientEfCoreRepository(AutoServiceDbContext context) : IClientRepository
 {
     /// <inheritdoc />
-    public Client? Get(int id) => context.Clients.FirstOrDefault(c => c.Id == id);
+    public async Task<Client?> GetAsync(int id) => 
+        await context.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
     /// <inheritdoc />
-    public IReadOnlyList<Client> GetAll() => context.Clients.ToList();
+    public async Task<IReadOnlyList<Client>> GetAllAsync() =>
+        await context.Clients.ToListAsync();
 
     /// <inheritdoc />
-    public void Add(Client entity)
+    public async Task AddAsync(Client entity)
     {
-        context.Clients.Add(entity);
-        context.SaveChanges();
+        await context.Clients.AddAsync(entity);
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public void Update(Client entity)
+    public async Task UpdateAsync(Client entity)
     {
         context.Clients.Update(entity);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var client = Get(id);
+        var client = await GetAsync(id);
         if (client == null) return false;
 
         context.Clients.Remove(client);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return true;
     }
 }
