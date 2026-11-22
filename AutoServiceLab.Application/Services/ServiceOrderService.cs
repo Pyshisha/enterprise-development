@@ -1,4 +1,6 @@
-﻿using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Cars;
+using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
 using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
 using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
@@ -20,22 +22,28 @@ public class ServiceOrderService(
     ILogger<ServiceOrderService> logger) : IServiceOrderService
 {
     /// <inheritdoc />
-    public IList<ServiceOrderDto> GetAll()
+    public async Task<IList<ServiceOrderDto>> GetAllAsync()
     {
         logger.LogInformation("Получение списка всех заказов");
-        return repository.GetAll().Select(MapToDto).ToList();
+        var orders = await repository.GetAllAsync();
+        var result = new List<ServiceOrderDto>();
+        foreach (var o in orders)
+        {
+            result.Add(await MapToDtoAsync(o));
+        }
+        return result;
     }
 
     /// <inheritdoc />
-    public ServiceOrderDto? Get(int id)
+    public async Task<ServiceOrderDto?> GetAsync(int id)
     {
         logger.LogInformation("Получение заказа с ID: {Id}", id);
-        var o = repository.Get(id);
-        return o == null ? null : MapToDto(o);
+        var o = await repository.GetAsync(id);
+        return o == null ? null : await MapToDtoAsync(o);
     }
 
     /// <inheritdoc />
-    public ServiceOrderDto Create(ServiceOrderCreateUpdateDto dto)
+    public async Task<ServiceOrderDto> CreateAsync(ServiceOrderCreateUpdateDto dto)
     {
         logger.LogInformation("Создание заказа для клиента {ClientId}", dto.ClientId);
         var order = new ServiceOrder
@@ -43,40 +51,40 @@ public class ServiceOrderService(
             ReceptionDate = DateTime.Now,
             IssueDate = dto.IssueDate,
             ClientId = dto.ClientId,
-            Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден"),
+            Client = await clientRepo.GetAsync(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден"),
             CarId = dto.CarId,
-            Car = carRepo.Get(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена")
+            Car = await carRepo.GetAsync(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена")
         };
-        repository.Add(order);
-        return MapToDto(order);
+        await repository.AddAsync(order);
+        return await MapToDtoAsync(order);
     }
 
     /// <inheritdoc />
-    public ServiceOrderDto Update(ServiceOrderCreateUpdateDto dto, int id)
+    public async Task<ServiceOrderDto> UpdateAsync(ServiceOrderCreateUpdateDto dto, int id)
     {
         logger.LogInformation("Обновление заказа с ID: {Id}", id);
-        var order = repository.Get(id) ?? throw new KeyNotFoundException();
+        var order = await repository.GetAsync(id) ?? throw new KeyNotFoundException();
         order.IssueDate = dto.IssueDate;
         order.ClientId = dto.ClientId;
-        order.Client = clientRepo.Get(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден");
+        order.Client = await clientRepo.GetAsync(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден");
         order.CarId = dto.CarId;
-        order.Car = carRepo.Get(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена");
-        repository.Update(order);
-        return MapToDto(order);
+        order.Car = await carRepo.GetAsync(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена");
+        await repository.UpdateAsync(order);
+        return await MapToDtoAsync(order);
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         logger.LogInformation("Удаление заказа с ID: {Id}", id);
-        return repository.Delete(id);
+        return await repository.DeleteAsync(id);
     }
 
     /// <inheritdoc />
-    public IList<string> GetWorksByOrder(int orderId)
+    public async Task<IList<string>> GetWorksByOrder(int orderId)
     {
         logger.LogInformation("Получение работ для заказа с ID: {OrderId}", orderId);
-        return orderWorkRepo.GetAll()
+        return (await orderWorkRepo.GetAllAsync())
             .Where(ow => ow.ServiceOrderId == orderId)
             .Select(ow => ow.WorkType?.Name ?? "Неизвестно")
             .ToList();
@@ -85,26 +93,27 @@ public class ServiceOrderService(
     /// <summary>
     /// Вспомогательный метод для преобразования сущности в DTO
     /// </summary>
-    private ServiceOrderDto MapToDto(ServiceOrder o)
+    private async Task<ServiceOrderDto> MapToDtoAsync(ServiceOrder o)
     {
-        var works = orderWorkRepo.GetAll()
+        var works = (await orderWorkRepo.GetAllAsync())
             .Where(ow => ow.ServiceOrderId == o.Id)
             .Select(ow => new WorkTypeDto(ow.WorkType.Id, ow.WorkType.Name, ow.WorkType.Category, ow.WorkType.Duration, ow.WorkType.LaborCost))
             .ToList();
 
-        var mechanics = orderMechanicRepo.GetAll()
+        var mechanics = (await orderMechanicRepo.GetAllAsync())
             .Where(om => om.ServiceOrderId == o.Id)
             .Select(om => new MechanicDto(om.Mechanic.Id, om.Mechanic.FullName, om.Mechanic.Specialization, om.Mechanic.ExperienceYears))
             .ToList();
+
+        var clientDto = new ClientDto(o.Client.Id, o.Client.FullName, o.Client.Phone);
+        var carDto = new CarDto(o.Car.Id, o.Car.LicensePlate, o.Car.Brand, o.Car.Model, o.Car.Year, o.Car.ClientId);
 
         return new ServiceOrderDto(
             o.Id,
             o.ReceptionDate,
             o.IssueDate,
-            o.ClientId,
-            o.Client?.FullName ?? "",
-            o.CarId,
-            o.Car?.Model ?? "",
+            clientDto,
+            carDto,
             works,
             mechanics
         );

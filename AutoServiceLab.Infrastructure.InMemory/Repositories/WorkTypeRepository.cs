@@ -6,7 +6,7 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class WorkTypeRepository : IWorkTypeRepository
 {
-    private readonly List<WorkType> _workTypes = AutoServiceData.WorkTypes;
+    private readonly List<WorkType> _workTypes = new(AutoServiceData.WorkTypes);
 
     /// <inheritdoc />
     public WorkType? Get(int id) => _workTypes.FirstOrDefault(w => w.Id == id);

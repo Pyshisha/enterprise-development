@@ -6,7 +6,7 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class MechanicRepository : IMechanicRepository
 {
-    private readonly List<Mechanic> _mechanics = AutoServiceData.Mechanics;
+    private readonly List<Mechanic> _mechanics = new(AutoServiceData.Mechanics);
 
     /// <inheritdoc />
     public Mechanic? Get(int id) => _mechanics.FirstOrDefault(m => m.Id == id);

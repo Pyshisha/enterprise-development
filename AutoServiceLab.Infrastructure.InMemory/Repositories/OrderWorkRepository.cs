@@ -6,7 +6,7 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class OrderWorkRepository : IOrderWorkRepository
 {
-    private readonly List<OrderWork> _orderWorks = AutoServiceData.OrderWorks;
+    private readonly List<OrderWork> _orderWorks = new(AutoServiceData.OrderWorks);
 
     /// <inheritdoc />
     public OrderWork? Get(int id) => _orderWorks.FirstOrDefault(o => o.Id == id);

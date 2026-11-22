@@ -1,4 +1,6 @@
-﻿using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Cars;
+using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
 using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 
 namespace AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
@@ -9,20 +11,16 @@ namespace AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
 /// <param name="Id">Идентификатор заказа</param>
 /// <param name="ReceptionDate">Дата приема автомобиля</param>
 /// <param name="IssueDate">Дата выдачи автомобиля</param>
-/// <param name="ClientId">Идентификатор клиента</param>
-/// <param name="ClientName">ФИО клиента</param>
-/// <param name="CarId">Идентификатор автомобиля</param>
-/// <param name="CarModel">Модель автомобиля</param>
+/// <param name="Client">Клиент, оформивший заказ</param>
+/// <param name="Car">Автомобиль, принятый в обслуживание</param>
 /// <param name="Works">Список работ в заказе</param>
 /// <param name="Mechanics">Список механиков, выполнявших заказ</param>
 public record ServiceOrderDto(
     int Id,
     DateTime ReceptionDate,
     DateTime? IssueDate,
-    int ClientId,
-    string ClientName,
-    int CarId,
-    string CarModel,
+    ClientDto Client,
+    CarDto Car,
     IList<WorkTypeDto> Works,
     IList<MechanicDto> Mechanics
 );

@@ -6,7 +6,7 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class CarRepository : ICarRepository
 {
-    private readonly List<Car> _cars = AutoServiceData.Cars;
+    private readonly List<Car> _cars = new(AutoServiceData.Cars);
 
     /// <inheritdoc />
     public Car? Get(int id) => _cars.FirstOrDefault(c => c.Id == id);

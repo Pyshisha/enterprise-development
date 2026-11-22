@@ -13,7 +13,6 @@ namespace AutoServiceLab.Application.Services;
 /// </summary>
 public class AnalyticsService(
     IMechanicRepository mechanicRepository,
-    IWorkTypeRepository workTypeRepository,
     IServiceOrderRepository orderRepository,
     IOrderWorkRepository orderWorkRepository,
     IOrderMechanicRepository orderMechanicRepository,
@@ -91,21 +90,17 @@ public class AnalyticsService(
     {
         logger.LogInformation("Получение топ 5 видов работ");
 
-        var topWorkTypeIdsWithIndex = orderWorkRepository.GetAll()
-            .GroupBy(ow => ow.WorkTypeId)
-            .OrderByDescending(g => g.Count())
-            .Take(5)
-            .Select((g, index) => new { Id = g.Key, Position = index })
-            .ToList();
-
-        var topIds = topWorkTypeIdsWithIndex.Select(x => x.Id).ToList();
-
-        var result = workTypeRepository.GetAll()
-            .Where(w => topIds.Contains(w.Id))
-            .AsEnumerable()
-            .OrderBy(w => topWorkTypeIdsWithIndex.First(x => x.Id == w.Id).Position)
-            .Select(w => new WorkTypeDto(w.Id, w.Name, w.Category, w.Duration, w.LaborCost))
-            .ToList();
+        var result = orderWorkRepository.GetAll()
+        .GroupBy(ow => ow.WorkType)
+        .OrderByDescending(g => g.Count())
+        .Take(5)
+        .Select(g => new WorkTypeDto(
+            g.Key.Id,
+            g.Key.Name,
+            g.Key.Category,
+            g.Key.Duration,
+            g.Key.LaborCost))
+        .ToList();
 
         return result;
     }

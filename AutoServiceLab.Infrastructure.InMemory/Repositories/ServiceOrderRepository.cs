@@ -6,7 +6,7 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 
 public class ServiceOrderRepository : IServiceOrderRepository
 {
-    private readonly List<ServiceOrder> _orders = AutoServiceData.ServiceOrders;
+    private readonly List<ServiceOrder> _orders = new(AutoServiceData.ServiceOrders);
 
     /// <inheritdoc />
     public ServiceOrder? Get(int id) => _orders.FirstOrDefault(o => o.Id == id);

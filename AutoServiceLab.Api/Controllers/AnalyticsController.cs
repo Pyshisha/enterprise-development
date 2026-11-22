@@ -20,7 +20,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("mechanics-by-category")]
     [ProducesResponseType(typeof(IList<MechanicDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult GetMechanicsByCategory([FromQuery] MechanicSpecialization category)
+    public ActionResult<IList<MechanicDto>> GetMechanicsByCategory([FromQuery] MechanicSpecialization category)
     {
         try
         {
@@ -41,7 +41,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [ProducesResponseType(typeof(IList<ClientDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)] 
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult GetClientsByMechanic(int id)
+    public ActionResult<IList<ClientDto>> GetClientsByMechanic(int id)
     {
         try
         {
@@ -66,7 +66,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("repeat-clients")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult GetRepeatClients()
+    public ActionResult<int> GetRepeatClients()
     {
         try
         {
@@ -87,7 +87,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult GetOrderCost(int id)
+    public ActionResult<decimal> GetOrderCost(int id)
     {
         try
         {
@@ -112,7 +112,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("top-worktypes")]
     [ProducesResponseType(typeof(IList<WorkTypeDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult GetTopWorkTypes()
+    public ActionResult<IList<WorkTypeDto>> GetTopWorkTypes()
     {
         try
         {
