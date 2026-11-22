@@ -15,7 +15,6 @@ namespace AutoServiceLab.Application.Services;
 /// </summary>
 public class MechanicService(
     IMechanicRepository repository,
-    IServiceOrderRepository orderRepository,
     IOrderMechanicRepository orderMechanicRepository,
     ILogger<MechanicService> logger) : IMechanicService
 {
@@ -77,14 +76,11 @@ public class MechanicService(
     public IList<ServiceOrderDto> GetOrdersByMechanic(int mechanicId)
     {
         logger.LogInformation("Получение заказов механика с ID: {MechanicId}", mechanicId);
-        var orderIds = orderMechanicRepository.GetAll()
-            .Where(om => om.MechanicId == mechanicId)
-            .Select(om => om.ServiceOrderId)
-            .Distinct()
-            .ToList();
 
-        return orderRepository.GetAll()
-            .Where(o => orderIds.Contains(o.Id))
+        return orderMechanicRepository.GetAll()
+            .Where(om => om.MechanicId == mechanicId)
+            .Select(om => om.ServiceOrder)
+            .Distinct()
             .Select(o => new ServiceOrderDto(
                 o.Id,
                 o.ReceptionDate,

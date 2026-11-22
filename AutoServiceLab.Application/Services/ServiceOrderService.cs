@@ -17,8 +17,6 @@ public class ServiceOrderService(
     IServiceOrderRepository repository,
     IClientRepository clientRepo,
     ICarRepository carRepo,
-    IOrderWorkRepository orderWorkRepo,
-    IOrderMechanicRepository orderMechanicRepo,
     ILogger<ServiceOrderService> logger) : IServiceOrderService
 {
     /// <inheritdoc />
@@ -78,8 +76,8 @@ public class ServiceOrderService(
     public IList<string> GetWorksByOrder(int orderId)
     {
         logger.LogInformation("Получение работ для заказа с ID: {OrderId}", orderId);
-        return orderWorkRepo.GetAll()
-            .Where(ow => ow.ServiceOrderId == orderId)
+        var order = repository.Get(orderId) ?? throw new KeyNotFoundException($"Заказ с ID {orderId} не найден");
+        return order.OrderWorks
             .Select(ow => ow.WorkType?.Name ?? "Неизвестно")
             .ToList();
     }
@@ -87,15 +85,13 @@ public class ServiceOrderService(
     /// <summary>
     /// Вспомогательный метод для преобразования сущности в DTO
     /// </summary>
-    private ServiceOrderDto MapToDto(ServiceOrder o)
+    private static ServiceOrderDto MapToDto(ServiceOrder o)
     {
-        var works = orderWorkRepo.GetAll()
-            .Where(ow => ow.ServiceOrderId == o.Id)
+        var works = o.OrderWorks
             .Select(ow => new WorkTypeDto(ow.WorkType.Id, ow.WorkType.Name, ow.WorkType.Category, ow.WorkType.Duration, ow.WorkType.LaborCost))
             .ToList();
 
-        var mechanics = orderMechanicRepo.GetAll()
-            .Where(om => om.ServiceOrderId == o.Id)
+        var mechanics = o.OrderMechanics
             .Select(om => new MechanicDto(om.Mechanic.Id, om.Mechanic.FullName, om.Mechanic.Specialization, om.Mechanic.ExperienceYears))
             .ToList();
 
