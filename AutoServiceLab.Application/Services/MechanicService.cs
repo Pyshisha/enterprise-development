@@ -15,7 +15,6 @@ namespace AutoServiceLab.Application.Services;
 /// </summary>
 public class MechanicService(
     IMechanicRepository repository,
-    IServiceOrderRepository orderRepository,
     IOrderMechanicRepository orderMechanicRepository,
     ILogger<MechanicService> logger) : IMechanicService
 {

@@ -17,8 +17,6 @@ public class ServiceOrderService(
     IServiceOrderRepository repository,
     IClientRepository clientRepo,
     ICarRepository carRepo,
-    IOrderWorkRepository orderWorkRepo,
-    IOrderMechanicRepository orderMechanicRepo,
     ILogger<ServiceOrderService> logger) : IServiceOrderService
 {
     /// <inheritdoc />
@@ -29,7 +27,7 @@ public class ServiceOrderService(
         var result = new List<ServiceOrderDto>();
         foreach (var o in orders)
         {
-            result.Add(await MapToDtoAsync(o));
+            result.Add(MapToDto(o));
         }
         return result;
     }
@@ -39,7 +37,7 @@ public class ServiceOrderService(
     {
         logger.LogInformation("Получение заказа с ID: {Id}", id);
         var o = await repository.GetAsync(id);
-        return o == null ? null : await MapToDtoAsync(o);
+        return o == null ? null : MapToDto(o);
     }
 
     /// <inheritdoc />
@@ -48,7 +46,7 @@ public class ServiceOrderService(
         logger.LogInformation("Создание заказа для клиента {ClientId}", dto.ClientId);
         var order = new ServiceOrder
         {
-            ReceptionDate = DateTime.Now,
+            ReceptionDate = DateTime.UtcNow,
             IssueDate = dto.IssueDate,
             ClientId = dto.ClientId,
             Client = await clientRepo.GetAsync(dto.ClientId) ?? throw new KeyNotFoundException("Клиент не найден"),
@@ -56,7 +54,7 @@ public class ServiceOrderService(
             Car = await carRepo.GetAsync(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена")
         };
         await repository.AddAsync(order);
-        return await MapToDtoAsync(order);
+        return MapToDto(order);
     }
 
     /// <inheritdoc />
@@ -70,7 +68,7 @@ public class ServiceOrderService(
         order.CarId = dto.CarId;
         order.Car = await carRepo.GetAsync(dto.CarId) ?? throw new KeyNotFoundException("Машина не найдена");
         await repository.UpdateAsync(order);
-        return await MapToDtoAsync(order);
+        return MapToDto(order);
     }
 
     /// <inheritdoc />
@@ -84,8 +82,8 @@ public class ServiceOrderService(
     public async Task<IList<string>> GetWorksByOrder(int orderId)
     {
         logger.LogInformation("Получение работ для заказа с ID: {OrderId}", orderId);
-        return (await orderWorkRepo.GetAllAsync())
-            .Where(ow => ow.ServiceOrderId == orderId)
+        var order = await repository.GetAsync(orderId) ?? throw new KeyNotFoundException($"Заказ с ID {orderId} не найден");
+        return order.OrderWorks
             .Select(ow => ow.WorkType?.Name ?? "Неизвестно")
             .ToList();
     }
@@ -93,15 +91,13 @@ public class ServiceOrderService(
     /// <summary>
     /// Вспомогательный метод для преобразования сущности в DTO
     /// </summary>
-    private async Task<ServiceOrderDto> MapToDtoAsync(ServiceOrder o)
+    private static ServiceOrderDto MapToDto(ServiceOrder o)
     {
-        var works = (await orderWorkRepo.GetAllAsync())
-            .Where(ow => ow.ServiceOrderId == o.Id)
+        var works = o.OrderWorks
             .Select(ow => new WorkTypeDto(ow.WorkType.Id, ow.WorkType.Name, ow.WorkType.Category, ow.WorkType.Duration, ow.WorkType.LaborCost))
             .ToList();
 
-        var mechanics = (await orderMechanicRepo.GetAllAsync())
-            .Where(om => om.ServiceOrderId == o.Id)
+        var mechanics = o.OrderMechanics
             .Select(om => new MechanicDto(om.Mechanic.Id, om.Mechanic.FullName, om.Mechanic.Specialization, om.Mechanic.ExperienceYears))
             .ToList();
 
