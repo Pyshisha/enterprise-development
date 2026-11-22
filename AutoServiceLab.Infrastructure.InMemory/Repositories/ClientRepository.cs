@@ -9,7 +9,7 @@ namespace AutoServiceLab.Infrastructure.InMemory.Repositories;
 /// </summary>
 public class ClientRepository : IClientRepository
 {
-    private readonly List<Client> _clients = AutoServiceData.Clients;
+    private readonly List<Client> _clients = new(AutoServiceData.Clients);
 
     /// <inheritdoc />
     public Client? Get(int id) => _clients.FirstOrDefault(c => c.Id == id);

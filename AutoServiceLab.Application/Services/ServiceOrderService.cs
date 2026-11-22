@@ -1,4 +1,6 @@
-﻿using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
+﻿using AutoServiceLab.Application.Contracts.Dtos.Cars;
+using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.Mechanics;
 using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
 using AutoServiceLab.Application.Contracts.Dtos.WorkTypes;
 using AutoServiceLab.Application.Contracts.Interfaces;
@@ -97,14 +99,15 @@ public class ServiceOrderService(
             .Select(om => new MechanicDto(om.Mechanic.Id, om.Mechanic.FullName, om.Mechanic.Specialization, om.Mechanic.ExperienceYears))
             .ToList();
 
+        var clientDto = new ClientDto(o.Client.Id, o.Client.FullName, o.Client.Phone);
+        var carDto = new CarDto(o.Car.Id, o.Car.LicensePlate, o.Car.Brand, o.Car.Model, o.Car.Year, o.Car.ClientId);
+
         return new ServiceOrderDto(
             o.Id,
             o.ReceptionDate,
             o.IssueDate,
-            o.ClientId,
-            o.Client?.FullName ?? "",
-            o.CarId,
-            o.Car?.Model ?? "",
+            clientDto,
+            carDto,
             works,
             mechanics
         );
