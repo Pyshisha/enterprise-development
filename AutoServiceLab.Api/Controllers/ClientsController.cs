@@ -1,5 +1,6 @@
 ﻿using AutoServiceLab.Application.Contracts.Dtos.Cars;
 using AutoServiceLab.Application.Contracts.Dtos.Clients;
+using AutoServiceLab.Application.Contracts.Dtos.ServiceOrders;
 using AutoServiceLab.Application.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,5 +55,17 @@ public class ClientsController(
     {
         logger.LogInformation("Запрос на получение машин клиента {Id}", id);
         return Ok(carService.GetCarsByClientId(id));
+    }
+
+    /// <summary>
+    /// Получить заказы клиента
+    /// </summary>
+    [HttpGet("{id}/orders")] 
+    [ProducesResponseType(typeof(IList<ServiceOrderDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult<IList<ServiceOrderDto>> GetClientOrders(int id)
+    {
+        logger.LogInformation("Запрос на получение заказов клиента {Id}", id);
+        return Ok(service.GetOrdersByClient(id));
     }
 }

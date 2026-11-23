@@ -76,7 +76,6 @@ public class MechanicService(
     public IList<ServiceOrderDto> GetOrdersByMechanic(int mechanicId)
     {
         logger.LogInformation("Получение заказов механика с ID: {MechanicId}", mechanicId);
-
         return orderMechanicRepository.GetAll()
             .Where(om => om.MechanicId == mechanicId)
             .Select(om => om.ServiceOrder)
@@ -87,8 +86,8 @@ public class MechanicService(
                 o.IssueDate,
                 new ClientDto(o.Client.Id, o.Client.FullName, o.Client.Phone),
                 new CarDto(o.Car.Id, o.Car.LicensePlate, o.Car.Brand, o.Car.Model, o.Car.Year, o.Car.ClientId),
-                new List<WorkTypeDto>(),
-                new List<MechanicDto>()
+                o.OrderWorks.Select(ow => new WorkTypeDto(ow.WorkType.Id, ow.WorkType.Name, ow.WorkType.Category, ow.WorkType.Duration, ow.WorkType.LaborCost)).ToList(),
+                o.OrderMechanics.Select(m => new MechanicDto(m.Mechanic.Id, m.Mechanic.FullName, m.Mechanic.Specialization, m.Mechanic.ExperienceYears)).ToList()
             ))
             .ToList();
     }
