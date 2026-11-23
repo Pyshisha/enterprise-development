@@ -22,12 +22,12 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public virtual ActionResult<IList<TDto>> GetAll()
+    public virtual async Task<ActionResult<IList<TDto>>> GetAll()
     {
         try
         {
             logger.LogInformation("Получение всех элементов типа {DtoType}", typeof(TDto).Name);
-            var result = service.GetAll();
+            var result = await service.GetAllAsync();
             return Ok(result);
         }
         catch (Exception exception)
@@ -44,12 +44,12 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public virtual ActionResult<TDto> Get(TKey id)
+    public virtual async Task<ActionResult<TDto>> Get(TKey id)
     {
         try
         {
             logger.LogInformation("Получение элемента типа {DtoType} с Id {Id}", typeof(TDto).Name, id);
-            var result = service.Get(id);
+            var result = await service.GetAsync(id);
             if (result is null)
             {
                 logger.LogWarning("Элемент типа {DtoType} с Id {Id} не найден", typeof(TDto).Name, id);
@@ -71,12 +71,12 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public virtual ActionResult<TDto> Post(TCreateUpdateDto dto)
+    public virtual async Task<ActionResult<TDto>> Post(TCreateUpdateDto dto)
     {
         try
         {
             logger.LogInformation("Создание элемента типа {DtoType}", typeof(TDto).Name);
-            var result = service.Create(dto);
+            var result = await service.CreateAsync(dto);
             logger.LogInformation("Элемент типа {DtoType} успешно создан", typeof(TDto).Name);
             return StatusCode(StatusCodes.Status201Created, result);
         }
@@ -104,12 +104,12 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public virtual ActionResult<TDto> Update(TCreateUpdateDto dto, TKey id)
+    public virtual async Task<ActionResult<TDto>> Update(TCreateUpdateDto dto, TKey id)
     {
         try
         {
             logger.LogInformation("Обновление элемента типа {DtoType} с Id {Id}", typeof(TDto).Name, id);
-            var result = service.Update(dto, id);
+            var result = await service.UpdateAsync(dto, id);
             logger.LogInformation("Элемент типа {DtoType} с Id {Id} успешно обновлён", typeof(TDto).Name, id);
             return Ok(result);
         }
@@ -136,13 +136,13 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public virtual IActionResult Delete(TKey id)
+    public virtual async Task<IActionResult> Delete(TKey id)
     {
         try
         {
             logger.LogInformation("Удаление элемента типа {DtoType} с Id {Id}", typeof(TDto).Name, id);
 
-            service.Delete(id);
+            await service.DeleteAsync(id);
 
             logger.LogInformation("Элемент типа {DtoType} с Id {Id} успешно удалён", typeof(TDto).Name, id);
             return NoContent();

@@ -87,8 +87,8 @@ public class MechanicService(
                 o.IssueDate,
                 new ClientDto(o.Client.Id, o.Client.FullName, o.Client.Phone),
                 new CarDto(o.Car.Id, o.Car.LicensePlate, o.Car.Brand, o.Car.Model, o.Car.Year, o.Car.ClientId),
-                new List<WorkTypeDto>(),
-                new List<MechanicDto>()
+                o.OrderWorks.Select(ow => new WorkTypeDto(ow.WorkType.Id, ow.WorkType.Name, ow.WorkType.Category, ow.WorkType.Duration, ow.WorkType.LaborCost)).ToList(),
+                o.OrderMechanics.Select(om => new MechanicDto(om.Mechanic.Id, om.Mechanic.FullName, om.Mechanic.Specialization, om.Mechanic.ExperienceYears)).ToList()
             ))
             .ToList();
     }

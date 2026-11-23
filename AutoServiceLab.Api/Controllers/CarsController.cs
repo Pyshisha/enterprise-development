@@ -14,29 +14,30 @@ public class CarsController(ICarService service, ILogger<CarsController> logger)
     /// Получить список всех автомобилей
     /// </summary>
     [HttpGet]
-    public override ActionResult<IList<CarDto>> GetAll() => base.GetAll();
+    public override async Task<ActionResult<IList<CarDto>>> GetAll() => await base.GetAll();
 
     /// <summary>
     /// Получить автомобиль по идентификатору
     /// </summary>
     [HttpGet("{id}")]
-    public override ActionResult<CarDto> Get(int id) => base.Get(id);
+    public override async Task<ActionResult<CarDto>> Get(int id) => 
+await base.Get(id);
 
     /// <summary>
     /// Создать новый автомобиль
     /// </summary>
     [HttpPost]
-    public override ActionResult<CarDto> Post(CarCreateUpdateDto dto) => base.Post(dto);
+    public override async Task<ActionResult<CarDto>> Post(CarCreateUpdateDto dto) => await base.Post(dto);
 
     /// <summary>
     /// Обновить данные автомобиля
     /// </summary>
     [HttpPut("{id}")]
-    public override ActionResult<CarDto> Update(CarCreateUpdateDto dto, int id) => base.Update(dto, id);
+    public override async Task<ActionResult<CarDto>> Update(CarCreateUpdateDto dto, int id) => await base.Update(dto, id);
 
     /// <summary>
     /// Удалить автомобиль
     /// </summary>
     [HttpDelete("{id}")]
-    public override IActionResult Delete(int id) => base.Delete(id);
+    public override async Task<IActionResult> Delete(int id) => await base.Delete(id);
 }

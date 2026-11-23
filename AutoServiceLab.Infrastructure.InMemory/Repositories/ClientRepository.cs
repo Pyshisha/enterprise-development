@@ -12,30 +12,32 @@ public class ClientRepository : IClientRepository
     private readonly List<Client> _clients = new(AutoServiceData.Clients);
 
     /// <inheritdoc />
-    public Client? Get(int id) => _clients.FirstOrDefault(c => c.Id == id);
+    public Task<Client?> GetAsync(int id) => Task.FromResult(_clients.FirstOrDefault(c => c.Id == id));
 
     /// <inheritdoc />
-    public IReadOnlyList<Client> GetAll() => _clients;
+    public Task<IReadOnlyList<Client>> GetAllAsync() => Task.FromResult<IReadOnlyList<Client>>(_clients);
 
     /// <inheritdoc />
-    public void Add(Client entity)
+    public Task AddAsync(Client entity)
     {
         entity.Id = _clients.Count == 0 ? 1 : _clients.Max(c => c.Id) + 1;
         _clients.Add(entity);
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public void Update(Client entity)
+    public Task UpdateAsync(Client entity)
     {
         var index = _clients.FindIndex(c => c.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException($"Клиент {entity.Id} не найден");
         _clients[index] = entity;
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var client = Get(id);
+        var client = await GetAsync(id);
         return client != null && _clients.Remove(client);
     }
 }

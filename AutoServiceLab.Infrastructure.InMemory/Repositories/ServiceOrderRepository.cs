@@ -9,30 +9,32 @@ public class ServiceOrderRepository : IServiceOrderRepository
     private readonly List<ServiceOrder> _orders = new(AutoServiceData.ServiceOrders);
 
     /// <inheritdoc />
-    public ServiceOrder? Get(int id) => _orders.FirstOrDefault(o => o.Id == id);
+    public Task<ServiceOrder?> GetAsync(int id) => Task.FromResult(_orders.FirstOrDefault(o => o.Id == id));
 
     /// <inheritdoc />
-    public IReadOnlyList<ServiceOrder> GetAll() => _orders;
+    public Task<IReadOnlyList<ServiceOrder>> GetAllAsync() => Task.FromResult<IReadOnlyList<ServiceOrder>>(_orders);
 
     /// <inheritdoc />
-    public void Add(ServiceOrder entity)
+    public Task AddAsync(ServiceOrder entity)
     {
         entity.Id = _orders.Count == 0 ? 1 : _orders.Max(o => o.Id) + 1;
         _orders.Add(entity);
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public void Update(ServiceOrder entity)
+    public Task UpdateAsync(ServiceOrder entity)
     {
         var index = _orders.FindIndex(o => o.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException();
         _orders[index] = entity;
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var o = Get(id);
+        var o = await GetAsync(id);
         return o != null && _orders.Remove(o);
     }
 }

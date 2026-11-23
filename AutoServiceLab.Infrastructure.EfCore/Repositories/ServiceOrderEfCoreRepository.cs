@@ -12,16 +12,24 @@ public class ServiceOrderEfCoreRepository(AutoServiceDbContext context) : IServi
     /// <inheritdoc />
     public async Task<ServiceOrder?> GetAsync(int id) =>
         await context.ServiceOrders
-        .Include(o => o.Client)
-        .Include(o => o.Car)
-        .FirstOrDefaultAsync(o => o.Id == id);
+            .Include(o => o.Client)
+            .Include(o => o.Car)
+            .Include(o => o.OrderWorks)
+                .ThenInclude(ow => ow.WorkType)
+            .Include(o => o.OrderMechanics)
+                .ThenInclude(om => om.Mechanic)
+            .FirstOrDefaultAsync(o => o.Id == id);
 
     /// <inheritdoc />
     public async Task<IReadOnlyList<ServiceOrder>> GetAllAsync() =>
         await context.ServiceOrders
-        .Include(o => o.Client)
-        .Include(o => o.Car)
-        .ToListAsync();
+            .Include(o => o.Client)
+            .Include(o => o.Car)
+            .Include(o => o.OrderWorks)
+                .ThenInclude(ow => ow.WorkType)
+            .Include(o => o.OrderMechanics)
+                .ThenInclude(om => om.Mechanic)
+            .ToListAsync();
 
     /// <inheritdoc />
     public async Task AddAsync(ServiceOrder entity)

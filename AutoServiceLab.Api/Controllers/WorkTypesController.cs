@@ -14,29 +14,29 @@ public class WorkTypesController(IWorkTypeService service, ILogger<WorkTypesCont
     /// Получить список всех видов работ
     /// </summary>
     [HttpGet]
-    public override ActionResult<IList<WorkTypeDto>> GetAll() => base.GetAll();
+    public override async Task<ActionResult<IList<WorkTypeDto>>> GetAll() => await base.GetAll();
 
     /// <summary>
     /// Получить вид работ по идентификатору
     /// </summary>
     [HttpGet("{id}")]
-    public override ActionResult<WorkTypeDto> Get(int id) => base.Get(id);
+    public override async Task<ActionResult<WorkTypeDto>> Get(int id) => await base.Get(id);
 
     /// <summary>
     /// Создать новый вид работ
     /// </summary>
     [HttpPost]
-    public override ActionResult<WorkTypeDto> Post(WorkTypeCreateUpdateDto dto) => base.Post(dto);
+    public override async Task<ActionResult<WorkTypeDto>> Post(WorkTypeCreateUpdateDto dto) => await base.Post(dto);
 
     /// <summary>
     /// Обновить данные вида работ
     /// </summary>
     [HttpPut("{id}")]
-    public override ActionResult<WorkTypeDto> Update(WorkTypeCreateUpdateDto dto, int id) => base.Update(dto, id);
+    public override async Task<ActionResult<WorkTypeDto>> Update(WorkTypeCreateUpdateDto dto, int id) => await base.Update(dto, id);
 
     /// <summary>
     /// Удалить вид работ
     /// </summary>
     [HttpDelete("{id}")]
-    public override IActionResult Delete(int id) => base.Delete(id);
+    public override async Task<IActionResult> Delete(int id) => await base.Delete(id);
 }

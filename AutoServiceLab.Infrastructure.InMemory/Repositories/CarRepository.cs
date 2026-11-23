@@ -9,30 +9,32 @@ public class CarRepository : ICarRepository
     private readonly List<Car> _cars = new(AutoServiceData.Cars);
 
     /// <inheritdoc />
-    public Car? Get(int id) => _cars.FirstOrDefault(c => c.Id == id);
+    public Task<Car?> GetAsync(int id) => Task.FromResult(_cars.FirstOrDefault(c => c.Id == id));
 
     /// <inheritdoc />
-    public IReadOnlyList<Car> GetAll() => _cars;
+    public Task<IReadOnlyList<Car>> GetAllAsync() => Task.FromResult<IReadOnlyList<Car>>(_cars);
 
     /// <inheritdoc />
-    public void Add(Car entity)
+    public Task AddAsync(Car entity)
     {
         entity.Id = _cars.Count == 0 ? 1 : _cars.Max(c => c.Id) + 1;
         _cars.Add(entity);
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public void Update(Car entity)
+    public Task UpdateAsync(Car entity)
     {
         var index = _cars.FindIndex(c => c.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException($"Автомобиль {entity.Id} не найден");
         _cars[index] = entity;
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var car = Get(id);
+        var car = await GetAsync(id);
         return car != null && _cars.Remove(car);
     }
 }

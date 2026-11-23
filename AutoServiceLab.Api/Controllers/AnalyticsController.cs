@@ -20,12 +20,12 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("mechanics-by-category")]
     [ProducesResponseType(typeof(IList<MechanicDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<IList<MechanicDto>> GetMechanicsByCategory([FromQuery] MechanicSpecialization category)
+    public async Task<ActionResult<IList<MechanicDto>>> GetMechanicsByCategory([FromQuery] MechanicSpecialization category)
     {
         try
         {
             logger.LogInformation("Запрос аналитики: механики по категории {Category}", category);
-            return Ok(service.GetMechanicsByWorkCategory(category));
+            return Ok(await service.GetMechanicsByWorkCategory(category));
         }
         catch (Exception ex)
         {
@@ -41,12 +41,12 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [ProducesResponseType(typeof(IList<ClientDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)] 
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<IList<ClientDto>> GetClientsByMechanic(int id)
+    public async Task<ActionResult<IList<ClientDto>>> GetClientsByMechanic(int id)
     {
         try
         {
             logger.LogInformation("Запрос аналитики: клиенты механика {Id}", id);
-            return Ok(service.GetClientsByMechanic(id));
+            return Ok(await service.GetClientsByMechanic(id));
         }
         catch (KeyNotFoundException ex) 
         {
@@ -66,12 +66,12 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("repeat-clients")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<int> GetRepeatClients()
+    public async Task<ActionResult<int>> GetRepeatClients()
     {
         try
         {
             logger.LogInformation("Запрос аналитики: количество повторных клиентов");
-            return Ok(service.GetRepeatClientsCount());
+            return Ok(await service.GetRepeatClientsCount());
         }
         catch (Exception ex)
         {
@@ -87,12 +87,12 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<decimal> GetOrderCost(int id)
+    public async Task<ActionResult<decimal>> GetOrderCost(int id)
     {
         try
         {
             logger.LogInformation("Запрос аналитики: стоимость заказа {Id}", id);
-            return Ok(service.GetOrderTotalCost(id));
+            return Ok(await service.GetOrderTotalCost(id));
         }
         catch (KeyNotFoundException ex)
         {
@@ -112,12 +112,12 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     [HttpGet("top-worktypes")]
     [ProducesResponseType(typeof(IList<WorkTypeDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<IList<WorkTypeDto>> GetTopWorkTypes()
+    public async Task<ActionResult<IList<WorkTypeDto>>> GetTopWorkTypes()
     {
         try
         {
             logger.LogInformation("Запрос аналитики: топ-5 видов работ");
-            return Ok(service.GetTopFiveWorkTypes());
+            return Ok(await service.GetTopFiveWorkTypes());
         }
         catch (Exception ex)
         {

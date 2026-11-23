@@ -14,31 +14,31 @@ public class ServiceOrdersController(IServiceOrderService service, ILogger<Servi
     /// Получить список всех заказов
     /// </summary>
     [HttpGet]
-    public override ActionResult<IList<ServiceOrderDto>> GetAll() => base.GetAll();
+    public override async Task<ActionResult<IList<ServiceOrderDto>>> GetAll() => await base.GetAll();
 
     /// <summary>
     /// Получить заказ по идентификатору
     /// </summary>
     [HttpGet("{id}")]
-    public override ActionResult<ServiceOrderDto> Get(int id) => base.Get(id);
+    public override async Task<ActionResult<ServiceOrderDto>> Get(int id) => await base.Get(id);
 
     /// <summary>
     /// Создать новый заказ
     /// </summary>
     [HttpPost]
-    public override ActionResult<ServiceOrderDto> Post(ServiceOrderCreateUpdateDto dto) => base.Post(dto);
+    public override async Task<ActionResult<ServiceOrderDto>> Post(ServiceOrderCreateUpdateDto dto) => await base.Post(dto);
 
     /// <summary>
     /// Обновить данные заказа
     /// </summary>
     [HttpPut("{id}")]
-    public override ActionResult<ServiceOrderDto> Update(ServiceOrderCreateUpdateDto dto, int id) => base.Update(dto, id);
+    public override async Task<ActionResult<ServiceOrderDto>> Update(ServiceOrderCreateUpdateDto dto, int id) => await base.Update(dto, id);
 
     /// <summary>
     /// Удалить заказ
     /// </summary>
     [HttpDelete("{id}")]
-    public override IActionResult Delete(int id) => base.Delete(id);
+    public override async Task<IActionResult> Delete(int id) => await base.Delete(id);
 
     /// <summary>
     /// Получить работы заказа
@@ -46,9 +46,9 @@ public class ServiceOrdersController(IServiceOrderService service, ILogger<Servi
     [HttpGet("{id}/works")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<IEnumerable<string>> GetWorks(int id)
+    public async Task<ActionResult<IEnumerable<string>>> GetWorks(int id)
     {
         logger.LogInformation("Запрос на получение работ заказа {Id}", id);
-        return Ok(service.GetWorksByOrder(id));
+        return Ok(await service.GetWorksByOrder(id));
     }
 }

@@ -9,30 +9,32 @@ public class OrderMechanicRepository : IOrderMechanicRepository
     private readonly List<OrderMechanic> _orderMechanics = new(AutoServiceData.OrderMechanics);
 
     /// <inheritdoc />
-    public OrderMechanic? Get(int id) => _orderMechanics.FirstOrDefault(o => o.Id == id);
+    public Task<OrderMechanic?> GetAsync(int id) => Task.FromResult(_orderMechanics.FirstOrDefault(o => o.Id == id));
 
     /// <inheritdoc />
-    public IReadOnlyList<OrderMechanic> GetAll() => _orderMechanics;
+    public Task<IReadOnlyList<OrderMechanic>> GetAllAsync() => Task.FromResult<IReadOnlyList<OrderMechanic>>(_orderMechanics);
 
     /// <inheritdoc />
-    public void Add(OrderMechanic entity)
+    public Task AddAsync(OrderMechanic entity)
     {
         entity.Id = _orderMechanics.Count == 0 ? 1 : _orderMechanics.Max(o => o.Id) + 1;
         _orderMechanics.Add(entity);
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public void Update(OrderMechanic entity)
+    public Task UpdateAsync(OrderMechanic entity)
     {
         var index = _orderMechanics.FindIndex(o => o.Id == entity.Id);
         if (index == -1) throw new KeyNotFoundException();
         _orderMechanics[index] = entity;
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var item = Get(id);
+        var item = await GetAsync(id);
         return item != null && _orderMechanics.Remove(item);
     }
 }
