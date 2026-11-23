@@ -10,7 +10,7 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class ClientEfCoreRepository(AutoServiceDbContext context) : IClientRepository
 {
     /// <inheritdoc />
-    public async Task<Client?> GetAsync(int id) => 
+    public async Task<Client?> GetAsync(int id) =>
         await context.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
     /// <inheritdoc />

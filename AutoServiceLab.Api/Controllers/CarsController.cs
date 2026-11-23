@@ -20,7 +20,7 @@ public class CarsController(ICarService service, ILogger<CarsController> logger)
     /// Получить автомобиль по идентификатору
     /// </summary>
     [HttpGet("{id}")]
-    public override async Task<ActionResult<CarDto>> Get(int id) => 
+    public override async Task<ActionResult<CarDto>> Get(int id) =>
 await base.Get(id);
 
     /// <summary>

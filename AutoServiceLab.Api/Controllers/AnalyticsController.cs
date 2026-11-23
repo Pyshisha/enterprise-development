@@ -39,7 +39,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// </summary>
     [HttpGet("clients-by-mechanic/{id}")]
     [ProducesResponseType(typeof(IList<ClientDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)] 
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<IList<ClientDto>>> GetClientsByMechanic(int id)
     {
@@ -48,7 +48,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
             logger.LogInformation("Запрос аналитики: клиенты механика {Id}", id);
             return Ok(await service.GetClientsByMechanic(id));
         }
-        catch (KeyNotFoundException ex) 
+        catch (KeyNotFoundException ex)
         {
             logger.LogWarning(ex, "Механик с ID {Id} не найден", id);
             return NotFound(new { message = ex.Message });

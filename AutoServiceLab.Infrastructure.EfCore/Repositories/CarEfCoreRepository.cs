@@ -10,11 +10,11 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class CarEfCoreRepository(AutoServiceDbContext context) : ICarRepository
 {
     /// <inheritdoc />
-    public async Task<Car?> GetAsync(int id) => 
+    public async Task<Car?> GetAsync(int id) =>
         await context.Cars.FirstOrDefaultAsync(c => c.Id == id);
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<Car>> GetAllAsync() => 
+    public async Task<IReadOnlyList<Car>> GetAllAsync() =>
         await context.Cars.ToListAsync();
 
     /// <inheritdoc />

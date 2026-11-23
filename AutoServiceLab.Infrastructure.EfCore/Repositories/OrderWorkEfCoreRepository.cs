@@ -10,7 +10,7 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class OrderWorkEfCoreRepository(AutoServiceDbContext context) : IOrderWorkRepository
 {
     /// <inheritdoc />
-    public async Task<OrderWork?> GetAsync(int id) => 
+    public async Task<OrderWork?> GetAsync(int id) =>
         await context.OrderWorks
         .Include(ow => ow.WorkType)
         .FirstOrDefaultAsync(ow => ow.Id == id);

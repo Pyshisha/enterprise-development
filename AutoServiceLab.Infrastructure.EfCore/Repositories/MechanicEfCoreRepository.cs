@@ -10,7 +10,7 @@ namespace AutoServiceLab.Infrastructure.EfCore.Repositories;
 public class MechanicEfCoreRepository(AutoServiceDbContext context) : IMechanicRepository
 {
     /// <inheritdoc />
-    public async Task<Mechanic?> GetAsync(int id) => 
+    public async Task<Mechanic?> GetAsync(int id) =>
         await context.Mechanics.FirstOrDefaultAsync(m => m.Id == id);
 
     /// <inheritdoc />

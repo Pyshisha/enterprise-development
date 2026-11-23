@@ -20,20 +20,20 @@ public class OrderMechanicEfCoreRepository(AutoServiceDbContext context) : IOrde
             .FirstOrDefaultAsync(om => om.Id == id);
 
     /// <inheritdoc />
-   public async Task<IReadOnlyList<OrderMechanic>> GetAllAsync() =>
-   await context.OrderMechanics
-       .Include(om => om.Mechanic)
-       .Include(om => om.ServiceOrder)
-           .ThenInclude(o => o.Client)
-       .Include(om => om.ServiceOrder)
-           .ThenInclude(o => o.Car)
-       .Include(om => om.ServiceOrder)             
-           .ThenInclude(o => o.OrderWorks)         
-               .ThenInclude(ow => ow.WorkType)    
-       .Include(om => om.ServiceOrder)            
-           .ThenInclude(o => o.OrderMechanics)     
-               .ThenInclude(om2 => om2.Mechanic)   
-       .ToListAsync();
+    public async Task<IReadOnlyList<OrderMechanic>> GetAllAsync() =>
+    await context.OrderMechanics
+        .Include(om => om.Mechanic)
+        .Include(om => om.ServiceOrder)
+            .ThenInclude(o => o.Client)
+        .Include(om => om.ServiceOrder)
+            .ThenInclude(o => o.Car)
+        .Include(om => om.ServiceOrder)
+            .ThenInclude(o => o.OrderWorks)
+                .ThenInclude(ow => ow.WorkType)
+        .Include(om => om.ServiceOrder)
+            .ThenInclude(o => o.OrderMechanics)
+                .ThenInclude(om2 => om2.Mechanic)
+        .ToListAsync();
 
     /// <inheritdoc />
     public async Task AddAsync(OrderMechanic entity)
