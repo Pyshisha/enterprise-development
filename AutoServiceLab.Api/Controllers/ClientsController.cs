@@ -60,7 +60,7 @@ public class ClientsController(
     /// <summary>
     /// Получить заказы клиента
     /// </summary>
-    [HttpGet("{id}/orders")] 
+    [HttpGet("{id}/orders")]
     [ProducesResponseType(typeof(IList<ServiceOrderDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<IList<ServiceOrderDto>> GetClientOrders(int id)
